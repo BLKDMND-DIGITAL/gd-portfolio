@@ -1,14 +1,15 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenAI } from "@google/genai";
-import { Send, User, Bot, Loader2, X } from 'lucide-react';
+import { Send, Bot, Loader2, X } from 'lucide-react';
 import { PROFILE, COMPETENCIES, ARCHITECTURE_SPECS } from './constants';
 
-const GeminiAgent: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+const GeminiAgent: React.FC<{ onClose: () => void, theme?: 'light' | 'dark' }> = ({ onClose, theme = 'dark' }) => {
   const [messages, setMessages] = useState<{ role: 'user' | 'assistant', content: string }[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const isDark = theme === 'dark';
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -25,7 +26,6 @@ const GeminiAgent: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     setIsTyping(true);
 
     try {
-      // Direct API key initialization following strictly defined guidelines
       const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
       const systemInstruction = `
         You are the BLKDMND Identity Agent, representing Greg Dukes.
@@ -51,7 +51,7 @@ const GeminiAgent: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         ],
         config: {
           systemInstruction,
-          temperature: 0.1, // High precision
+          temperature: 0.1,
         }
       });
 
@@ -59,30 +59,32 @@ const GeminiAgent: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       setMessages(prev => [...prev, { role: 'assistant', content: aiText }]);
     } catch (error) {
       console.error("AI Error:", error);
-      setMessages(prev => [...prev, { role: 'assistant', content: "An error occurred while connecting to the agent. Please ensure your environment is configured correctly." }]);
+      setMessages(prev => [...prev, { role: 'assistant', content: "An error occurred. Please ensure your environment is configured correctly." }]);
     } finally {
       setIsTyping(false);
     }
   };
 
   return (
-    <div className="fixed bottom-6 right-6 w-96 h-[500px] glass rounded-2xl flex flex-col shadow-2xl z-[60] border border-white/20">
-      <div className="p-4 border-b border-white/10 flex items-center justify-between">
+    <div className={`fixed bottom-6 right-6 w-96 h-[500px] rounded-2xl flex flex-col shadow-2xl z-[60] border transition-colors ${
+      isDark ? 'bg-black/90 glass border-white/20' : 'bg-white border-black/10'
+    }`}>
+      <div className="p-4 border-b border-black/5 dark:border-white/10 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-          <span className="font-semibold text-sm">BLKDMND Identity Agent</span>
+          <div className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></div>
+          <span className="font-bold text-sm tracking-tight">Identity Agent</span>
         </div>
-        <button onClick={onClose} className="text-white/40 hover:text-white transition-colors">
+        <button onClick={onClose} className="opacity-40 hover:opacity-100 transition-opacity">
           <X className="w-5 h-5" />
         </button>
       </div>
 
       <div ref={scrollRef} className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 && (
-          <div className="text-center mt-10">
-            <Bot className="w-12 h-12 text-white/10 mx-auto mb-4" />
-            <p className="text-white/40 text-sm px-6 italic">
-              "Ask me anything about Greg's technical competencies, architecture philosophy, or agent systems."
+          <div className="text-center mt-10 space-y-4 px-6">
+            <Bot className="w-12 h-12 opacity-10 mx-auto" />
+            <p className="opacity-40 text-xs italic leading-relaxed">
+              "Ask me about Greg's technical competencies, architecture philosophy, or multi-agent systems."
             </p>
           </div>
         )}
@@ -90,8 +92,8 @@ const GeminiAgent: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`max-w-[85%] p-3 rounded-2xl text-sm ${
               m.role === 'user' 
-                ? 'bg-white text-black rounded-tr-none' 
-                : 'bg-white/5 border border-white/10 text-white/80 rounded-tl-none'
+                ? 'bg-[#EC9D34] text-black font-semibold rounded-tr-none shadow-md' 
+                : `${isDark ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/5'} border opacity-90 rounded-tl-none`
             }`}>
               {m.content}
             </div>
@@ -99,27 +101,29 @@ const GeminiAgent: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         ))}
         {isTyping && (
           <div className="flex justify-start">
-            <div className="bg-white/5 border border-white/10 p-3 rounded-2xl rounded-tl-none">
-              <Loader2 className="w-4 h-4 text-white/40 animate-spin" />
+            <div className={`${isDark ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/5'} border p-3 rounded-2xl rounded-tl-none`}>
+              <Loader2 className="w-4 h-4 opacity-40 animate-spin" />
             </div>
           </div>
         )}
       </div>
 
-      <div className="p-4 border-t border-white/10">
+      <div className="p-4 border-t border-black/5 dark:border-white/10">
         <div className="relative">
           <input 
             type="text" 
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Query Greg's competencies..."
-            className="w-full bg-white/5 border border-white/10 rounded-full py-3 px-5 pr-12 text-sm focus:outline-none focus:ring-1 focus:ring-white/20 transition-all"
+            placeholder="Query competencies..."
+            className={`w-full border rounded-full py-3 px-5 pr-12 text-sm focus:outline-none transition-all ${
+              isDark ? 'bg-white/5 border-white/10 focus:ring-white/20' : 'bg-black/5 border-black/10 focus:ring-black/5'
+            }`}
           />
           <button 
             onClick={handleSend}
             disabled={isTyping}
-            className="absolute right-2 top-1.5 p-2 bg-white text-black rounded-full hover:bg-neutral-200 transition-colors disabled:opacity-50"
+            className="absolute right-2 top-1.5 p-2 bg-[#EC9D34] text-black rounded-full hover:opacity-90 transition-opacity disabled:opacity-50"
           >
             <Send className="w-4 h-4" />
           </button>

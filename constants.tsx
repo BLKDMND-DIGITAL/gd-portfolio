@@ -1,6 +1,23 @@
 
 import React from 'react';
-import { Shield, Zap, Cpu, Code, Database, Search } from 'lucide-react';
+import { 
+  Shield, 
+  Zap, 
+  Cpu, 
+  Code, 
+  Database, 
+  Search, 
+  Terminal, 
+  Globe, 
+  Cpu as AI, 
+  Layout, 
+  Box, 
+  Lock, 
+  Cloud, 
+  FileCode, 
+  RefreshCcw,
+  Network
+} from 'lucide-react';
 
 export const SITE_METADATA = {
   title: "BLKDMND | Visual Thesis",
@@ -20,7 +37,7 @@ export const PROFILE = {
   },
   links: {
     github: "github.com/BLKDMND-DIGITAL",
-    linkedin: "linkedin.com/in/gregdukes",
+    linkedin: "linkedin.com/in/greg-dukes-genai",
     portfolio: "blkdmnd.digital"
   },
   roles: [
@@ -32,6 +49,58 @@ export const PROFILE = {
   ],
   bio: "As an AI Architect and Senior React Engineer, my focus is on the synthesis of function and form. I build intelligent, scalable, and visually compelling digital experiences that solve real-world problems. My approach is rooted in a deep understanding of user-centric design principles, seamlessly integrated with cutting-edge AI technologies to create products that are not just smart, but also intuitive and delightful to use."
 };
+
+export const TOOLKIT = [
+  { name: "React", category: "Frontend", icon: <Layout className="w-5 h-5" /> },
+  { name: "TypeScript", category: "Language", icon: <Code className="w-5 h-5" /> },
+  { name: "Python", category: "AI/Backend", icon: <Terminal className="w-5 h-5" /> },
+  { name: "LangGraph", category: "Orchestration", icon: <AI className="w-5 h-5" /> },
+  { name: "LangChain", category: "Framework", icon: <Box className="w-5 h-5" /> },
+  { name: "PostgreSQL", category: "Database", icon: <Database className="w-5 h-5" /> },
+  { name: "Docker", category: "Infrastructure", icon: <Box className="w-5 h-5" /> },
+  { name: "Tailwind", category: "Design", icon: <Globe className="w-5 h-5" /> },
+  { name: "Vercel", category: "Deployment", icon: <Zap className="w-5 h-5" /> },
+  { name: "FastAPI", category: "API", icon: <Cpu className="w-5 h-5" /> },
+];
+
+export const AWS_ARCHITECTURE = [
+  {
+    service: "Amazon S3",
+    icon: <Database className="w-6 h-6" />,
+    metaphor: "The Secure Vault",
+    narrative: "Think of S3 as the secure root of this site's digital files. It holds the React build artifacts and assets in a strictly configured bucket with no public access allowed. Instead of acting as a public-facing server, it serves as a protected 'origin'—ensuring that only our global delivery network can access the site's internals."
+  },
+  {
+    service: "Amazon CloudFront",
+    icon: <Cloud className="w-6 h-6" />,
+    metaphor: "The Global Gatekeeper",
+    narrative: "CloudFront acts as the global courier for the app. It terminates HTTPS traffic at the edge, handles the TLS handshake, and caches content geographically close to the user. Critically for a React app, it uses custom error-based routing (mapping 403s and 404s back to index.html) to allow for smooth Single Page Application (SPA) navigation without server-side crashes."
+  },
+  {
+    service: "AWS Certificate Manager",
+    icon: <Lock className="w-6 h-6" />,
+    metaphor: "The Digital Passport",
+    narrative: "Security isn't an afterthought. Every byte of traffic is encrypted via SSL/TLS certificates issued through ACM. These certificates are validated at the infrastructure level and integrated directly with CloudFront, featuring automated renewal so the production environment remains secure and trusted without manual intervention."
+  },
+  {
+    service: "Amazon Route 53",
+    icon: <Network className="w-6 h-6" />,
+    metaphor: "The Reliable Address Book",
+    narrative: "Route 53 manages the high-availability DNS for the blkdmnd.digital domain and subdomains. I used Alias records to point traffic directly to the CloudFront distribution. This ensures that the transition from a human-readable URL to a technical IP address is nearly instantaneous and resilient to regional AWS outages."
+  },
+  {
+    service: "IAM + Security",
+    icon: <Shield className="w-6 h-6" />,
+    metaphor: "The Key Card System",
+    narrative: "Following the principle of 'least privilege,' I use highly scoped IAM roles and policies. For example, the S3 bucket is explicitly locked down so it only 'talks' to CloudFront via an Origin Access Identity (OAI), preventing direct web access to the storage layer and mitigating common security vulnerabilities."
+  },
+  {
+    service: "Infrastructure Workflow",
+    icon: <Terminal className="w-6 h-6" />,
+    metaphor: "The Automated Blueprint",
+    narrative: "Infrastructure is handled through an 'as-code' mindset. Updates to DNS records and distribution settings are applied programmatically using the AWS CLI and JSON batch files. This ensures that every configuration change is repeatable, auditable, and production-ready—moving away from 'click-ops' and toward scalable engineering."
+  }
+];
 
 export const COMPETENCIES = [
   {
