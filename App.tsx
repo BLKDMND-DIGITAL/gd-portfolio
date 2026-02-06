@@ -539,20 +539,20 @@ const App: React.FC = () => {
       </button>
 
       {/* Overlays */}
-      {isExplainerOpen && <ExplainerOverlay onClose={() => setIsExplainerOpen(false)} />}
+      {isExplainerOpen && <ExplainerOverlay theme={theme} onClose={() => setIsExplainerOpen(false)} />}
 
       {/* FastTrack Modal Overlay */}
       {isFastTrackOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-10 animate-in fade-in duration-300">
            <div className="absolute inset-0 bg-black/80 backdrop-blur-xl" onClick={() => setIsFastTrackOpen(false)} />
-           <div className="relative w-full max-w-6xl h-full max-h-[90vh] glass rounded-[2.5rem] overflow-hidden shadow-2xl border-white/10 animate-in zoom-in-95 duration-500">
+           <div className={`relative w-full max-w-6xl h-full max-h-[90vh] glass rounded-[2.5rem] overflow-hidden shadow-2xl border-white/10 animate-in zoom-in-95 duration-500`}>
               <button 
                 onClick={() => setIsFastTrackOpen(false)}
                 className="absolute top-6 right-6 z-[110] p-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors"
               >
                 <X className="w-6 h-6" />
               </button>
-              <FastTrack />
+              <FastTrack theme={theme} />
            </div>
         </div>
       )}

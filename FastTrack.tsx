@@ -51,13 +51,18 @@ const GREG_FT_PROFILE: FTProfile = {
   skills: ["React", "TypeScript", "Python", "LangChain", "LLMs", "System Design", "Cloud Architecture"]
 };
 
-const FastTrack: React.FC = () => {
+interface FastTrackProps {
+  theme?: 'light' | 'dark';
+}
+
+const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [profile] = useState<FTProfile>(GREG_FT_PROFILE);
   const [jobDescription, setJobDescription] = useState('');
   const [analysis, setAnalysis] = useState<FTAnalysis | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isDark = theme === 'dark';
 
   const analyzeJob = async () => {
     if (!jobDescription.trim()) {
@@ -170,16 +175,22 @@ const FastTrack: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#0d0d0d] text-white overflow-hidden">
+    <div className={`flex flex-col h-full overflow-hidden transition-colors duration-300 ${
+      isDark ? 'bg-dark text-white' : 'bg-light text-black'
+    }`}>
       {/* Tool Header */}
-      <div className="flex items-center justify-between px-8 py-6 bg-white/5 border-b border-white/10 shrink-0">
+      <div className={`flex items-center justify-between px-8 py-6 border-b shrink-0 ${
+        isDark ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'
+      }`}>
         <div className="flex items-center gap-4">
           <div className="p-3 bg-[#EC9D34]/20 rounded-xl">
             <RefreshCw className={`w-6 h-6 text-[#EC9D34] ${isLoading ? 'animate-spin' : ''}`} />
           </div>
           <div>
             <h3 className="font-bold text-xl leading-none">FastTrack AI Engine</h3>
-            <span className="text-[10px] text-white/30 uppercase tracking-[0.3em] font-bold">Signal Alignment Tool v2.1</span>
+            <span className={`text-[10px] uppercase tracking-[0.3em] font-bold ${
+              isDark ? 'text-white/30' : 'text-black/30'
+            }`}>Signal Alignment Tool v2.1</span>
           </div>
         </div>
 
@@ -188,7 +199,9 @@ const FastTrack: React.FC = () => {
             {[1, 2, 3].map((s) => (
               <div 
                 key={s} 
-                className={`w-12 h-1.5 rounded-full transition-all duration-500 ${step >= s ? 'bg-[#EC9D34]' : 'bg-white/10'}`} 
+                className={`w-12 h-1.5 rounded-full transition-all duration-500 ${
+                  step >= s ? 'bg-[#EC9D34]' : isDark ? 'bg-white/10' : 'bg-black/10'
+                }`} 
               />
             ))}
           </div>
@@ -205,9 +218,13 @@ const FastTrack: React.FC = () => {
                 <User className="w-6 h-6 text-[#EC9D34]" />
                 <h4 className="text-2xl font-bold">1. Verify Candidate Profile</h4>
               </div>
-              <p className="text-white/50 text-lg leading-relaxed">The engine uses the <span className="text-white font-bold">Greg Dukes</span> professional profile as the anchor for all subsequent mappings.</p>
+              <p className={`text-lg leading-relaxed ${isDark ? 'text-white/50' : 'text-black/50'}`}>
+                The engine uses the <span className={isDark ? 'text-white font-bold' : 'text-black font-bold'}>Greg Dukes</span> professional profile as the anchor for all subsequent mappings.
+              </p>
               
-              <div className="bg-white/5 p-8 rounded-[2rem] border border-white/10 space-y-6">
+              <div className={`p-8 rounded-[2rem] border space-y-6 ${
+                isDark ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'
+              }`}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div className="space-y-1">
                     <label className="text-[10px] uppercase tracking-widest text-[#EC9D34] font-bold block">Full Identity</label>
@@ -222,7 +239,9 @@ const FastTrack: React.FC = () => {
                   <label className="text-[10px] uppercase tracking-widest text-[#EC9D34] font-bold block">Verified Stack</label>
                   <div className="flex flex-wrap gap-2">
                     {profile.skills.map(s => (
-                      <span key={s} className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs font-mono font-bold text-white/70">
+                      <span key={s} className={`px-3 py-1.5 border rounded-full text-xs font-mono font-bold ${
+                        isDark ? 'bg-white/5 border-white/10 text-white/70' : 'bg-black/5 border-black/10 text-black/70'
+                      }`}>
                         {s}
                       </span>
                     ))}
@@ -245,14 +264,18 @@ const FastTrack: React.FC = () => {
                 <Briefcase className="w-6 h-6 text-[#EC9D34]" />
                 <h4 className="text-2xl font-bold">2. Inject Job Requirements</h4>
               </div>
-              <p className="text-white/50 text-lg">Input the target JD. The engine will perform high-precision mapping against the verified anchor.</p>
+              <p className={`text-lg ${isDark ? 'text-white/50' : 'text-black/50'}`}>
+                Input the target JD. The engine will perform high-precision mapping against the verified anchor.
+              </p>
               
               <div className="relative">
                 <textarea 
                   value={jobDescription}
                   onChange={(e) => setJobDescription(e.target.value)}
                   placeholder="Paste Job Description (JD) text here..."
-                  className="w-full h-80 bg-white/[0.03] border border-white/10 rounded-[2rem] p-8 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#EC9D34]/40 transition-all placeholder:text-white/10 resize-none"
+                  className={`w-full h-80 border rounded-[2rem] p-8 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#EC9D34]/40 transition-all resize-none ${
+                    isDark ? 'bg-white/[0.03] border-white/10 text-white placeholder:text-white/10' : 'bg-black/[0.03] border-black/10 text-black placeholder:text-black/10'
+                  }`}
                 />
                 <div className="absolute bottom-6 right-8 text-[10px] text-[#EC9D34] uppercase tracking-widest font-black flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -288,7 +311,9 @@ const FastTrack: React.FC = () => {
 
           {step === 3 && analysis && (
             <div className="space-y-12 pb-20">
-              <div className="flex flex-col md:flex-row gap-8 items-start md:items-center justify-between p-10 bg-white/5 border border-white/10 rounded-[2.5rem]">
+              <div className={`flex flex-col md:flex-row gap-8 items-start md:items-center justify-between p-10 border rounded-[2.5rem] ${
+                isDark ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'
+              }`}>
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-green-500/20 rounded-lg">
@@ -296,11 +321,17 @@ const FastTrack: React.FC = () => {
                     </div>
                     <h4 className="text-3xl font-bold">Signal Map Complete</h4>
                   </div>
-                  <p className="text-white/40 text-sm font-medium">Alignment established with 0.1 degree of precision.</p>
+                  <p className={`text-sm font-medium ${isDark ? 'text-white/40' : 'text-black/40'}`}>
+                    Alignment established with 0.1 degree of precision.
+                  </p>
                 </div>
-                <div className="text-center md:text-right bg-black/40 p-6 rounded-[2rem] border border-white/5 min-w-[200px]">
+                <div className={`text-center md:text-right p-6 rounded-[2rem] border min-w-[200px] ${
+                  isDark ? 'bg-black/40 border-white/5' : 'bg-white border-black/5'
+                }`}>
                    <div className="text-6xl font-black text-[#EC9D34] mb-1">{analysis.matchScore}%</div>
-                   <div className="text-[10px] uppercase tracking-[0.3em] text-white/30 font-black">MATCH SCORE</div>
+                   <div className={`text-[10px] uppercase tracking-[0.3em] font-black ${
+                     isDark ? 'text-white/30' : 'text-black/30'
+                   }`}>MATCH SCORE</div>
                 </div>
               </div>
 
@@ -310,9 +341,13 @@ const FastTrack: React.FC = () => {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <Layout className="w-5 h-5 text-[#EC9D34]" />
-                      <h5 className="font-bold uppercase tracking-widest text-[10px] text-white/50">Optimized Narrative</h5>
+                      <h5 className={`font-bold uppercase tracking-widest text-[10px] ${
+                        isDark ? 'text-white/50' : 'text-black/50'
+                      }`}>Optimized Narrative</h5>
                     </div>
-                    <div className="p-8 rounded-[2rem] bg-white/[0.03] border border-white/10 text-base italic leading-relaxed text-white/90">
+                    <div className={`p-8 rounded-[2rem] border text-base italic leading-relaxed ${
+                      isDark ? 'bg-white/[0.03] border-white/10 text-white/90' : 'bg-black/[0.03] border-black/10 text-black/90'
+                    }`}>
                       "{analysis.optimizedSummary}"
                     </div>
                   </div>
@@ -320,16 +355,20 @@ const FastTrack: React.FC = () => {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <Linkedin className="w-5 h-5 text-blue-400" />
-                      <h5 className="font-bold uppercase tracking-widest text-[10px] text-white/50">LinkedIn Optimization</h5>
+                      <h5 className={`font-bold uppercase tracking-widest text-[10px] ${
+                        isDark ? 'text-white/50' : 'text-black/50'
+                      }`}>LinkedIn Optimization</h5>
                     </div>
-                    <div className="p-6 rounded-2xl bg-blue-500/5 border border-blue-500/10 space-y-4">
+                    <div className={`p-6 rounded-2xl border space-y-4 ${
+                      isDark ? 'bg-blue-500/5 border-blue-500/10' : 'bg-blue-500/10 border-blue-500/20'
+                    }`}>
                        <div>
                          <label className="text-[9px] text-blue-400 font-black uppercase mb-2 block">Dynamic Headline</label>
                          <p className="text-sm font-bold">{analysis.linkedinSuggestions.headline}</p>
                        </div>
                        <div>
                          <label className="text-[9px] text-blue-400 font-black uppercase mb-2 block">Refined 'About' Segment</label>
-                         <p className="text-xs text-white/60 leading-relaxed line-clamp-4">{analysis.linkedinSuggestions.about}</p>
+                         <p className={`text-xs leading-relaxed line-clamp-4 ${isDark ? 'text-white/60' : 'text-black/60'}`}>{analysis.linkedinSuggestions.about}</p>
                        </div>
                     </div>
                   </div>
@@ -340,34 +379,44 @@ const FastTrack: React.FC = () => {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <AlertCircle className="w-5 h-5 text-red-400" />
-                      <h5 className="font-bold uppercase tracking-widest text-[10px] text-white/50">Entropy / Knowledge Gaps</h5>
+                      <h5 className={`font-bold uppercase tracking-widest text-[10px] ${
+                        isDark ? 'text-white/50' : 'text-black/50'
+                      }`}>Entropy / Knowledge Gaps</h5>
                     </div>
                     <div className="space-y-3">
                       {analysis.gapAnalysis.map((gap, i) => (
-                        <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-red-500/5 border border-red-500/10 text-xs font-bold text-red-200">
+                        <div key={i} className={`flex items-center gap-4 p-4 rounded-xl border text-xs font-bold ${
+                          isDark ? 'bg-red-500/5 border-red-500/10 text-red-200' : 'bg-red-500/10 border-red-500/20 text-red-700'
+                        }`}>
                           <div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
                           {gap}
                         </div>
                       ))}
                       {analysis.gapAnalysis.length === 0 && (
-                        <div className="p-5 rounded-2xl bg-green-500/5 border border-green-500/10 text-sm font-bold text-green-400 text-center">
+                        <div className={`p-5 rounded-2xl border text-sm font-bold text-green-400 text-center ${
+                          isDark ? 'bg-green-500/5 border-green-500/10' : 'bg-green-500/10 border-green-500/20'
+                        }`}>
                           NO ARCHITECTURAL GAPS IDENTIFIED.
                         </div>
                       )}
                     </div>
                   </div>
 
-                  <div className="pt-10 border-t border-white/5 grid grid-cols-1 gap-4">
+                  <div className={`pt-10 border-t grid grid-cols-1 gap-4 ${isDark ? 'border-white/5' : 'border-black/5'}`}>
                     <button 
                       onClick={exportPDF}
-                      className="w-full py-5 rounded-2xl bg-white text-black font-black text-lg flex items-center justify-center gap-3 hover:bg-neutral-200 transition-all shadow-xl"
+                      className={`w-full py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all shadow-xl ${
+                        isDark ? 'bg-white text-black hover:bg-neutral-200' : 'bg-black text-white hover:bg-neutral-800'
+                      }`}
                     >
                       <FileDown className="w-6 h-6" />
                       Export ATS PDF
                     </button>
                     <button 
                       onClick={() => setStep(2)}
-                      className="w-full py-5 rounded-2xl bg-white/5 border border-white/10 font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all"
+                      className={`w-full py-5 rounded-2xl border font-bold flex items-center justify-center gap-3 transition-all ${
+                        isDark ? 'bg-white/5 border-white/10 hover:bg-white/10' : 'bg-black/5 border-black/10 hover:bg-black/10'
+                      }`}
                     >
                       <RefreshCw className="w-5 h-5" />
                       Re-run Alignment
