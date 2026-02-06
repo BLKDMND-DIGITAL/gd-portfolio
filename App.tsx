@@ -22,18 +22,20 @@ import {
   Workflow,
   Send,
   MessageSquare,
-  // Fix: Added missing icons
   CheckCircle2,
-  Lock
+  Lock,
+  PlayCircle
 } from 'lucide-react';
 import { PROFILE, COMPETENCIES, PROJECTS, ARCHITECTURE_SPECS, ENTERPRISE_READINESS, TOOLKIT, AWS_ARCHITECTURE } from './constants';
 import ReflectiveCard from './ReflectiveCard';
 import GeminiAgent from './GeminiAgent';
 import FastTrack from './FastTrack';
+import ExplainerOverlay from './ExplainerOverlay';
 
 const App: React.FC = () => {
   const [isAgentOpen, setIsAgentOpen] = useState(false);
   const [isFastTrackOpen, setIsFastTrackOpen] = useState(false);
+  const [isExplainerOpen, setIsExplainerOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
@@ -165,10 +167,11 @@ const App: React.FC = () => {
                   Launch FastTrack <ChevronRight className="w-5 h-5" />
                 </button>
                 <button 
-                   onClick={() => setIsAgentOpen(true)}
-                  className="px-8 py-4 rounded-full glass font-bold text-lg hover:bg-black/5 dark:hover:bg-white/5 transition-all flex items-center gap-3"
+                   onClick={() => setIsExplainerOpen(true)}
+                  className="px-8 py-4 rounded-full glass font-bold text-lg hover:bg-black/5 dark:hover:bg-white/5 transition-all flex items-center gap-3 border-[#EC9D34]/20"
                 >
-                  Query the Agent <ExternalLink className="w-5 h-5" />
+                  <PlayCircle className="w-5 h-5 text-[#EC9D34]" />
+                  How This Was Built
                 </button>
               </div>
 
@@ -176,7 +179,7 @@ const App: React.FC = () => {
                 {[
                   "RAG constrained to source data",
                   "Verified professional credentials",
-                  "Vercel-hosted infrastructure"
+                  "Production Cloud Delivery"
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-2 opacity-40 text-xs uppercase tracking-widest font-semibold">
                     <div className="w-1.5 h-1.5 rounded-full bg-[#EC9D34]" />
@@ -534,6 +537,9 @@ const App: React.FC = () => {
       >
         <Bot className="w-6 h-6" />
       </button>
+
+      {/* Overlays */}
+      {isExplainerOpen && <ExplainerOverlay onClose={() => setIsExplainerOpen(false)} />}
 
       {/* FastTrack Modal Overlay */}
       {isFastTrackOpen && (

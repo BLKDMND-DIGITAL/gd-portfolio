@@ -16,7 +16,11 @@ import {
   Cloud, 
   FileCode, 
   RefreshCcw,
-  Network
+  Network,
+  Binary,
+  Layers,
+  Container,
+  Activity
 } from 'lucide-react';
 
 export const SITE_METADATA = {
@@ -49,6 +53,49 @@ export const PROFILE = {
   ],
   bio: "As an AI Architect and Senior React Engineer, my focus is on the synthesis of function and form. I build intelligent, scalable, and visually compelling digital experiences that solve real-world problems. My approach is rooted in a deep understanding of user-centric design principles, seamlessly integrated with cutting-edge AI technologies to create products that are not just smart, but also intuitive and delightful to use."
 };
+
+export const EXPLAINER_STEPS = [
+  {
+    id: 1,
+    title: "Genesis & Logic",
+    description: "Idea → Architecture. Translating high-level requirements into a zero-trust system design with strict data isolation.",
+    icon: <Binary className="w-8 h-8" />,
+    duration: 6000,
+    tags: ["Systems Thinking", "Logic Flows"]
+  },
+  {
+    id: 2,
+    title: "High-Performance UI",
+    description: "React + Vite + Tailwind. A production-grade frontend optimized for interaction speed and agentic responsiveness.",
+    icon: <Layout className="w-8 h-8" />,
+    duration: 6000,
+    tags: ["React 19", "Vite", "Tailwind"]
+  },
+  {
+    id: 3,
+    title: "Continuous Delivery",
+    description: "Vercel integration for rapid iteration coupled with Amazon S3 as a hardened, private origin for static assets.",
+    icon: <Activity className="w-8 h-8" />,
+    duration: 6000,
+    tags: ["Vercel", "S3", "CI/CD"]
+  },
+  {
+    id: 4,
+    title: "Cloud Infrastructure",
+    description: "CloudFront global delivery, ACM HTTPS encryption, and Route 53 DNS—orchestrated via AWS CLI for repeatable scaling.",
+    icon: <Cloud className="w-8 h-8" />,
+    duration: 6000,
+    tags: ["CloudFront", "Route 53", "IAM"]
+  },
+  {
+    id: 5,
+    title: "AI-Native Future",
+    description: "Integrating Gemini 3 & LangGraph multi-agent workflows. A scalable foundation built for the agentic era.",
+    icon: <Zap className="w-8 h-8" />,
+    duration: 6000,
+    tags: ["Gemini 3", "LangGraph", "Agents"]
+  }
+];
 
 export const TOOLKIT = [
   { name: "React", category: "Frontend", icon: <Layout className="w-5 h-5" /> },
