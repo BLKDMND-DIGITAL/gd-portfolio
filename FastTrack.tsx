@@ -14,11 +14,13 @@ import {
   Layout,
   Linkedin,
   FileDown,
-  ChevronRight
+  ChevronRight,
+  Star,
+  Target
 } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import { FTProfile, FTAnalysis } from './types';
-import { PROFILE } from './constants';
+import { PROFILE, TARGET_GIGS } from './constants';
 
 const GREG_FT_PROFILE: FTProfile = {
   name: PROFILE.name,
@@ -63,6 +65,10 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const isDark = theme === 'dark';
+
+  const selectGig = (desc: string) => {
+    setJobDescription(desc);
+  };
 
   const analyzeJob = async () => {
     if (!jobDescription.trim()) {
@@ -138,31 +144,60 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
   const exportPDF = () => {
     if (!analysis) return;
     const doc = new jsPDF();
+    const brandColor = [236, 157, 52]; // #EC9D34
     
-    doc.setFontSize(22);
-    doc.text(profile.name, 20, 20);
+    // Header
+    doc.setFillColor(brandColor[0], brandColor[1], brandColor[2]);
+    doc.rect(0, 0, 210, 40, 'F');
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(28);
+    doc.setFont("helvetica", "bold");
+    doc.text(profile.name.toUpperCase(), 20, 25);
     
     doc.setFontSize(10);
-    doc.text(`${profile.email} | ${profile.phone} | ${profile.location}`, 20, 28);
+    doc.setFont("helvetica", "normal");
+    doc.text(`${profile.email} | ${profile.phone} | ${profile.location}`, 20, 32);
     
+    // Body
+    doc.setTextColor(40, 40, 40);
+    
+    // Summary
     doc.setFontSize(14);
-    doc.text("Professional Summary", 20, 40);
+    doc.setFont("helvetica", "bold");
+    doc.text("PROFESSIONAL SUMMARY", 20, 55);
+    doc.setDrawColor(brandColor[0], brandColor[1], brandColor[2]);
+    doc.setLineWidth(0.5);
+    doc.line(20, 58, 190, 58);
+    
     doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
     const splitSummary = doc.splitTextToSize(analysis.optimizedSummary, 170);
-    doc.text(splitSummary, 20, 46);
+    doc.text(splitSummary, 20, 65);
     
-    let yPos = 46 + (splitSummary.length * 5) + 10;
+    let yPos = 65 + (splitSummary.length * 5) + 10;
     
+    // Experience
     doc.setFontSize(14);
-    doc.text("Experience", 20, yPos);
-    yPos += 8;
+    doc.setFont("helvetica", "bold");
+    doc.text("RELEVANT EXPERIENCE", 20, yPos);
+    doc.line(20, yPos + 3, 190, yPos + 3);
+    yPos += 12;
     
     analysis.optimizedExperience.forEach((exp) => {
       const original = profile.experience.find(e => e.company === exp.company);
       doc.setFontSize(12);
-      doc.text(`${original?.title || ''} at ${exp.company}`, 20, yPos);
+      doc.setFont("helvetica", "bold");
+      doc.text(original?.title || '', 20, yPos);
+      doc.setFont("helvetica", "normal");
+      doc.text(exp.company, 190, yPos, { align: 'right' });
       yPos += 5;
-      doc.setFontSize(10);
+      doc.setFontSize(9);
+      doc.setTextColor(100, 100, 100);
+      doc.text(original?.period || '', 20, yPos);
+      doc.setTextColor(40, 40, 40);
+      yPos += 6;
+      
       exp.bullets.forEach(bullet => {
         const splitBullet = doc.splitTextToSize(`• ${bullet}`, 160);
         doc.text(splitBullet, 25, yPos);
@@ -171,7 +206,17 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
       yPos += 5;
     });
 
-    doc.save(`${profile.name}_Optimized_Resume.pdf`);
+    // Skills
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("CORE COMPETENCIES", 20, yPos);
+    doc.line(20, yPos + 3, 190, yPos + 3);
+    yPos += 10;
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text(profile.skills.join("  •  "), 20, yPos);
+
+    doc.save(`${profile.name}_Tailored_Resume.pdf`);
   };
 
   return (
@@ -190,7 +235,7 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
             <h3 className="font-bold text-xl leading-none">FastTrack AI Engine</h3>
             <span className={`text-[10px] uppercase tracking-[0.3em] font-bold ${
               isDark ? 'text-white/30' : 'text-black/30'
-            }`}>Signal Alignment Tool v2.1</span>
+            }`}>Signal Alignment Tool v2.2</span>
           </div>
         </div>
 
@@ -259,27 +304,50 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
           )}
 
           {step === 2 && (
-            <div className="space-y-8">
-              <div className="flex items-center gap-4 mb-2">
-                <Briefcase className="w-6 h-6 text-[#EC9D34]" />
-                <h4 className="text-2xl font-bold">2. Inject Job Requirements</h4>
+            <div className="space-y-10">
+              <div className="space-y-4">
+                <div className="flex items-center gap-4 mb-2">
+                  <Briefcase className="w-6 h-6 text-[#EC9D34]" />
+                  <h4 className="text-2xl font-bold">2. Inject Job Requirements</h4>
+                </div>
+                <p className={`text-lg ${isDark ? 'text-white/50' : 'text-black/50'}`}>
+                  Select a target gig or paste a custom JD to align the resume signal.
+                </p>
               </div>
-              <p className={`text-lg ${isDark ? 'text-white/50' : 'text-black/50'}`}>
-                Input the target JD. The engine will perform high-precision mapping against the verified anchor.
-              </p>
               
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                 {TARGET_GIGS.map((gig) => (
+                   <button 
+                    key={gig.id}
+                    onClick={() => selectGig(gig.description)}
+                    className={`text-left p-6 rounded-2xl border transition-all group ${
+                      jobDescription === gig.description 
+                        ? 'border-[#EC9D34] bg-[#EC9D34]/10 ring-1 ring-[#EC9D34]' 
+                        : isDark ? 'bg-white/5 border-white/10 hover:border-white/20' : 'bg-black/5 border-black/10 hover:border-black/20'
+                    }`}
+                   >
+                     <div className="flex justify-between items-start mb-3">
+                        <Target className={`w-5 h-5 ${jobDescription === gig.description ? 'text-[#EC9D34]' : 'opacity-20'}`} />
+                        {jobDescription === gig.description && <Star className="w-4 h-4 text-[#EC9D34] fill-[#EC9D34]" />}
+                     </div>
+                     <h5 className="font-bold text-sm mb-1">{gig.title}</h5>
+                     <p className="text-[10px] opacity-40 uppercase font-black">{gig.company}</p>
+                   </button>
+                 ))}
+              </div>
+
               <div className="relative">
                 <textarea 
                   value={jobDescription}
                   onChange={(e) => setJobDescription(e.target.value)}
-                  placeholder="Paste Job Description (JD) text here..."
-                  className={`w-full h-80 border rounded-[2rem] p-8 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#EC9D34]/40 transition-all resize-none ${
+                  placeholder="Or paste custom Job Description text here..."
+                  className={`w-full h-64 border rounded-[2rem] p-8 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-[#EC9D34]/40 transition-all resize-none ${
                     isDark ? 'bg-white/[0.03] border-white/10 text-white placeholder:text-white/10' : 'bg-black/[0.03] border-black/10 text-black placeholder:text-black/10'
                   }`}
                 />
                 <div className="absolute bottom-6 right-8 text-[10px] text-[#EC9D34] uppercase tracking-widest font-black flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  RAG GROUNDING: ACTIVE
+                  STRICT_GROUNDING: ON
                 </div>
               </div>
 
@@ -298,11 +366,11 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
                 {isLoading ? (
                   <>
                     <Loader2 className="w-6 h-6 animate-spin" />
-                    Executing Signal Alignment...
+                    Synthesizing Resume Logic...
                   </>
                 ) : (
                   <>
-                    Run Mapping Protocol <Cpu className="w-6 h-6" />
+                    Align Signal & Generate Resume <Cpu className="w-6 h-6" />
                   </>
                 )}
               </button>
@@ -319,10 +387,10 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
                     <div className="p-2 bg-green-500/20 rounded-lg">
                       <CheckCircle2 className="w-6 h-6 text-green-500" />
                     </div>
-                    <h4 className="text-3xl font-bold">Signal Map Complete</h4>
+                    <h4 className="text-3xl font-bold">Resume Tailored</h4>
                   </div>
                   <p className={`text-sm font-medium ${isDark ? 'text-white/40' : 'text-black/40'}`}>
-                    Alignment established with 0.1 degree of precision.
+                    Signal established. Keywords optimized for hiring managers.
                   </p>
                 </div>
                 <div className={`text-center md:text-right p-6 rounded-[2rem] border min-w-[200px] ${
@@ -331,7 +399,7 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
                    <div className="text-6xl font-black text-[#EC9D34] mb-1">{analysis.matchScore}%</div>
                    <div className={`text-[10px] uppercase tracking-[0.3em] font-black ${
                      isDark ? 'text-white/30' : 'text-black/30'
-                   }`}>MATCH SCORE</div>
+                   }`}>JD ALIGNMENT</div>
                 </div>
               </div>
 
@@ -343,7 +411,7 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
                       <Layout className="w-5 h-5 text-[#EC9D34]" />
                       <h5 className={`font-bold uppercase tracking-widest text-[10px] ${
                         isDark ? 'text-white/50' : 'text-black/50'
-                      }`}>Optimized Narrative</h5>
+                      }`}>Optimized Summary Preview</h5>
                     </div>
                     <div className={`p-8 rounded-[2rem] border text-base italic leading-relaxed ${
                       isDark ? 'bg-white/[0.03] border-white/10 text-white/90' : 'bg-black/[0.03] border-black/10 text-black/90'
@@ -354,22 +422,19 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
 
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <Linkedin className="w-5 h-5 text-blue-400" />
+                      <Star className="w-5 h-5 text-[#EC9D34]" />
                       <h5 className={`font-bold uppercase tracking-widest text-[10px] ${
                         isDark ? 'text-white/50' : 'text-black/50'
-                      }`}>LinkedIn Optimization</h5>
+                      }`}>Recruiter Key-Signals</h5>
                     </div>
-                    <div className={`p-6 rounded-2xl border space-y-4 ${
-                      isDark ? 'bg-blue-500/5 border-blue-500/10' : 'bg-blue-500/10 border-blue-500/20'
-                    }`}>
-                       <div>
-                         <label className="text-[9px] text-blue-400 font-black uppercase mb-2 block">Dynamic Headline</label>
-                         <p className="text-sm font-bold">{analysis.linkedinSuggestions.headline}</p>
-                       </div>
-                       <div>
-                         <label className="text-[9px] text-blue-400 font-black uppercase mb-2 block">Refined 'About' Segment</label>
-                         <p className={`text-xs leading-relaxed line-clamp-4 ${isDark ? 'text-white/60' : 'text-black/60'}`}>{analysis.linkedinSuggestions.about}</p>
-                       </div>
+                    <div className="space-y-3">
+                      {analysis.optimizedExperience[0].bullets.slice(0, 3).map((bullet, i) => (
+                        <div key={i} className={`p-4 rounded-xl border text-xs leading-relaxed ${
+                          isDark ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'
+                        }`}>
+                          {bullet}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -378,39 +443,32 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
                 <div className="space-y-8">
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <AlertCircle className="w-5 h-5 text-red-400" />
+                      <AlertCircle className="w-5 h-5 text-[#EC9D34]/60" />
                       <h5 className={`font-bold uppercase tracking-widest text-[10px] ${
                         isDark ? 'text-white/50' : 'text-black/50'
-                      }`}>Entropy / Knowledge Gaps</h5>
+                      }`}>Alignment Recommendations</h5>
                     </div>
                     <div className="space-y-3">
                       {analysis.gapAnalysis.map((gap, i) => (
                         <div key={i} className={`flex items-center gap-4 p-4 rounded-xl border text-xs font-bold ${
-                          isDark ? 'bg-red-500/5 border-red-500/10 text-red-200' : 'bg-red-500/10 border-red-500/20 text-red-700'
+                          isDark ? 'bg-[#EC9D34]/5 border-[#EC9D34]/10 text-[#EC9D34]' : 'bg-[#EC9D34]/10 border-[#EC9D34]/20 text-orange-800'
                         }`}>
-                          <div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#EC9D34] shrink-0" />
                           {gap}
                         </div>
                       ))}
-                      {analysis.gapAnalysis.length === 0 && (
-                        <div className={`p-5 rounded-2xl border text-sm font-bold text-green-400 text-center ${
-                          isDark ? 'bg-green-500/5 border-green-500/10' : 'bg-green-500/10 border-green-500/20'
-                        }`}>
-                          NO ARCHITECTURAL GAPS IDENTIFIED.
-                        </div>
-                      )}
                     </div>
                   </div>
 
                   <div className={`pt-10 border-t grid grid-cols-1 gap-4 ${isDark ? 'border-white/5' : 'border-black/5'}`}>
                     <button 
                       onClick={exportPDF}
-                      className={`w-full py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all shadow-xl ${
-                        isDark ? 'bg-white text-black hover:bg-neutral-200' : 'bg-black text-white hover:bg-neutral-800'
+                      className={`w-full py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 transition-all shadow-xl hover:scale-[1.02] active:scale-95 ${
+                        isDark ? 'bg-white text-black hover:bg-neutral-200 shadow-white/5' : 'bg-black text-white hover:bg-neutral-800 shadow-black/5'
                       }`}
                     >
                       <FileDown className="w-6 h-6" />
-                      Export ATS PDF
+                      Download Tailored Resume
                     </button>
                     <button 
                       onClick={() => setStep(2)}
@@ -419,7 +477,7 @@ const FastTrack: React.FC<FastTrackProps> = ({ theme = 'dark' }) => {
                       }`}
                     >
                       <RefreshCw className="w-5 h-5" />
-                      Re-run Alignment
+                      New Alignment
                     </button>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
-
 import React from 'react';
+/* Added missing User and ShieldCheck imports to fix reference errors */
 import { 
   Shield, 
   Zap, 
@@ -20,11 +20,18 @@ import {
   Binary,
   Layers,
   Container,
-  Activity
+  Activity,
+  Eye,
+  CheckCircle,
+  FileSearch,
+  CloudLightning,
+  User,
+  ShieldCheck
 } from 'lucide-react';
 
 export const SITE_METADATA = {
   title: "BLKDMND | Visual Thesis",
+  tagline: "Get Your Slice of the Future",
   owner: "Greg Dukes",
   brandAccent: "#EC9D34",
 };
@@ -53,6 +60,54 @@ export const PROFILE = {
   ],
   bio: "As an AI Architect and Senior React Engineer, my focus is on the synthesis of function and form. I build intelligent, scalable, and visually compelling digital experiences that solve real-world problems. My approach is rooted in a deep understanding of user-centric design principles, seamlessly integrated with cutting-edge AI technologies to create products that are not just smart, but also intuitive and delightful to use."
 };
+
+export const HIRING_STEPS = [
+  {
+    step: 1,
+    title: "Who This Is For",
+    content: "This portfolio is built for teams hiring AI engineers, systems designers, creative technologists, and senior ICs who ship real systems.",
+    icon: <User className="w-6 h-6" />
+  },
+  {
+    step: 2,
+    title: "What I Actually Build",
+    content: "Production-grade AI systems, agentic workflows, RAG pipelines, cloud infrastructure, and human-centered interfaces—this site included.",
+    icon: <Cpu className="w-6 h-6" />
+  },
+  {
+    step: 3,
+    title: "Proof Over Claims",
+    content: "Every section of this site is backed by deployed infrastructure, live code, and documented outcomes—not hypotheticals.",
+    icon: <ShieldCheck className="w-6 h-6" />
+  },
+  {
+    step: 4,
+    title: "Your Role, Tailored",
+    content: "Generate a resume dynamically tailored to your open role using a live AI resume engine.",
+    icon: <Zap className="w-6 h-6" />
+  }
+];
+
+export const TARGET_GIGS = [
+  {
+    id: "genai_arch",
+    title: "Senior GenAI Solutions Architect",
+    company: "Stealth AI Startup",
+    description: "Seeking a lead architect to design multi-agent workflows using LangGraph and Gemini for enterprise automation. Must have deep experience in Python, RAG optimization, and production-grade React frontends."
+  },
+  {
+    id: "frontend_eng",
+    title: "Senior AI-Native Frontend Engineer",
+    company: "Fortune 500 Fintech",
+    description: "Expert React developer needed to build intelligent UI components. Focus on streaming LLM responses, agentic UI patterns, and high-performance TypeScript applications with complex state management."
+  },
+  {
+    id: "ai_systems",
+    title: "AI Systems Design Lead",
+    company: "Global Consulting Firm",
+    description: "Looking for an expert to bridge the gap between LLM research and product reality. Strong systems thinking, AWS infrastructure experience, and ability to engineer zero-fabrication AI agents is required."
+  }
+];
 
 export const EXPLAINER_STEPS = [
   {
@@ -115,37 +170,31 @@ export const AWS_ARCHITECTURE = [
     service: "Amazon S3",
     icon: <Database className="w-6 h-6" />,
     metaphor: "The Secure Vault",
-    narrative: "Think of S3 as the secure root of this site's digital files. It holds the React build artifacts and assets in a strictly configured bucket with no public access allowed. Instead of acting as a public-facing server, it serves as a protected 'origin'—ensuring that only our global delivery network can access the site's internals."
+    narrative: "Static asset hosting for the Visual Thesis, optimized for durability and cost efficiency. It holds the React build artifacts and assets in a strictly configured bucket with no public access allowed."
   },
   {
     service: "Amazon CloudFront",
     icon: <Cloud className="w-6 h-6" />,
-    metaphor: "The Global Gatekeeper",
-    narrative: "CloudFront acts as the global courier for the app. It terminates HTTPS traffic at the edge, handles the TLS handshake, and caches content geographically close to the user. Critically for a React app, it uses custom error-based routing (mapping 403s and 404s back to index.html) to allow for smooth Single Page Application (SPA) navigation without server-side crashes."
-  },
-  {
-    service: "AWS Certificate Manager",
-    icon: <Lock className="w-6 h-6" />,
-    metaphor: "The Digital Passport",
-    narrative: "Security isn't an afterthought. Every byte of traffic is encrypted via SSL/TLS certificates issued through ACM. These certificates are validated at the infrastructure level and integrated directly with CloudFront, featuring automated renewal so the production environment remains secure and trusted without manual intervention."
+    metaphor: "The Global Courier",
+    narrative: "Global CDN delivering low-latency access and HTTPS enforcement across all regions. It caches content geographically close to the user and manages Single Page Application routing."
   },
   {
     service: "Amazon Route 53",
     icon: <Network className="w-6 h-6" />,
-    metaphor: "The Reliable Address Book",
-    narrative: "Route 53 manages the high-availability DNS for the blkdmnd.digital domain and subdomains. I used Alias records to point traffic directly to the CloudFront distribution. This ensures that the transition from a human-readable URL to a technical IP address is nearly instantaneous and resilient to regional AWS outages."
+    metaphor: "The Global Switchboard",
+    narrative: "DNS management and domain routing for production-grade reliability. Alias records point traffic directly to the CloudFront distribution for near-instant resolution."
   },
   {
-    service: "IAM + Security",
-    icon: <Shield className="w-6 h-6" />,
-    metaphor: "The Key Card System",
-    narrative: "Following the principle of 'least privilege,' I use highly scoped IAM roles and policies. For example, the S3 bucket is explicitly locked down so it only 'talks' to CloudFront via an Origin Access Identity (OAI), preventing direct web access to the storage layer and mitigating common security vulnerabilities."
+    service: "AWS Certificate Manager",
+    icon: <Lock className="w-6 h-6" />,
+    metaphor: "The Security Seal",
+    narrative: "Managed SSL/TLS certificates enabling secure HTTPS delivery. Every byte of traffic is encrypted, with certificates validated at the infrastructure level."
   },
   {
-    service: "Infrastructure Workflow",
-    icon: <Terminal className="w-6 h-6" />,
-    metaphor: "The Automated Blueprint",
-    narrative: "Infrastructure is handled through an 'as-code' mindset. Updates to DNS records and distribution settings are applied programmatically using the AWS CLI and JSON batch files. This ensures that every configuration change is repeatable, auditable, and production-ready—moving away from 'click-ops' and toward scalable engineering."
+    service: "AWS CloudTrail",
+    icon: <FileSearch className="w-6 h-6" />,
+    metaphor: "The Audit Log",
+    narrative: "Infrastructure-level visibility and security tracking. Ensures that every management action is logged, providing a secure, auditable trail of configuration changes."
   }
 ];
 
