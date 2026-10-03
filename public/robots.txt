@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gd-portfolio-wy18.vercel.app/sitemap.xml
