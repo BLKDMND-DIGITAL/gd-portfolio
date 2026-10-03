@@ -22,6 +22,12 @@ export const REEL_URL = "";
 /** TODO: Greg supplies the BBC Reel page URL for Frisson. Empty keeps a title-only slot. */
 export const BBC_REEL_URL = "";
 
+/** Public path for a real Alchemy demo image. Empty hides the slot. */
+export const ALCHEMY_DEMO_IMG = "";
+
+/** Public path for a real EmpathMath demo image. Empty hides the slot. */
+export const EMPATHMATH_DEMO_IMG = "";
+
 export const SITE_URL = "https://gd-portfolio-wy18.vercel.app";
 
 export const LINKEDIN_URL = "https://www.linkedin.com/in/greg-dukes-genai/";

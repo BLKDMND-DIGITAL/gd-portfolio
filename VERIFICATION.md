@@ -18,7 +18,7 @@ Searched `dist/**/*.html` and `dist/**/*.js` for:
 
 `LangChain|LangGraph|Tech Systems Inc|team of 5|30%|Charlotte|production-grade|Cloud Practitioner|AWS Cloud Certification|Specialization|E2B|RAG pipelines|zero-fabrication|Stealth AI Startup|Fortune 500`
 
-**Match count: 0.**
+**Match count: 0.** Re-run after the challenge-page images were removed: still 0. The same re-run found 0 matches for `AIza[0-9A-Za-z_-]{35}`, phone numbers, `calendar.google.com`, `@gmail.com`, and `generativelanguage.googleapis.com`. A headless Chrome load of that build had 0 console errors and 0 failed requests. The only image requested was the hero. Alchemy and EmpathMath still show LIVE and their outbound links, with no demo figure.
 
 `RAG` appears once, in Swords & Shields: "Not yet built: retrieval (RAG), hashing, and encryption."
 
@@ -63,8 +63,6 @@ Static server (`python3 -m http.server` in `dist/`, which does not SPA-fallback)
 | `/og.png` | 200, 1200×630 PNG |
 | `/images/hero.avif` | 200 |
 | `/images/hero.webp` | 200 |
-| `/images/alchemy.webp` | 200 |
-| `/images/empathmath.webp` | 200 |
 | `/index.css` | 404 (not linked, and not requested on load) |
 | `/Greg_Dukes_Resume.pdf` | 404 |
 
@@ -111,7 +109,7 @@ No link points at `blkdmnd.digital` or `blkdmnd.vercel.app`. BBC Reel is not lin
 2. **Pass.** Swords & Shields badge is PROTOTYPE. BLKDMND OS badge is INTERNAL · NON-PRODUCTION. Neither card says the work is in production or deployed. The badge itself contains the word PRODUCTION as part of NON-PRODUCTION.
 3. **Pass.** No API-key pattern, no phone number, no Google Calendar embed, no `.env` file. Resume PDF is absent on purpose.
 4. **Pending Greg's resume file.** Load has 0 console errors and 0 failed requests. Favicon, robots, sitemap, and og.png return 200. `/index.css` is not requested. `/Greg_Dukes_Resume.pdf` returns 404 until Greg supplies the file. The download button stays hidden.
-5. **Pass (Option A).** The client bundle has no `generativelanguage.googleapis.com` call. Live cards have a labeled slot and a screenshot of the public landing page, not fabricated model output.
+5. **Pass (Option A).** The client bundle has no `generativelanguage.googleapis.com` call. The Alchemy and EmpathMath images were Cloudflare "Performing security verification" pages, so the files and the captions that called them landing-page screenshots were removed. `ALCHEMY_DEMO_IMG` and `EMPATHMATH_DEMO_IMG` are empty, and those cards render no demo image. Both stay LIVE and keep their links.
 6. **Pass, with two confirmations still open.** Footer renders `© 2026 Greg Dukes · Founder, BLKDMND` (year from `new Date().getFullYear()`). Location is Miami, FL. LinkedIn href is `https://www.linkedin.com/in/greg-dukes-genai/`. The AWS sentence matches Greg's wording. Credentials match profile overhaul §8, including Georgia Tech because its verify code is in the 2 Oct certificate file. TEDx is visible because `SHOW_TEDX` defaults to true; Greg still has to confirm TEDx allows the announcement. Georgia Tech's verify page did not show completion text in the HTML.
 7. **Pass for the raw HTML.** Title, description, Open Graph, Twitter card, and Person JSON-LD are in the response with JS disabled. LinkedIn Post Inspector was not run: this branch was not deployed.
 8. **Pass.** Lighthouse mobile scores and LCP/CLS meet the targets. Tailwind CDN and the import map are gone. Hero images are under 200 KB.
@@ -134,7 +132,7 @@ An unauthenticated request to these app URLs returns **302** to Vercel SSO (`ver
 
 - The resume PDF, saved as `Greg_Dukes_Resume.pdf`, with no Cloud Practitioner or LangChain claims. Then set `RESUME_AVAILABLE` to true.
 - The BBC Reel URL for Frisson, and confirmation of his role credit.
-- A reel or demo clips he owns (Alchemy, EmpathMath). Set `REEL_URL` when that file or unlisted video exists. A YouTube or Vimeo embed also needs a `frame-src` addition in `vercel.json`.
+- A reel or demo clips he owns (Alchemy, EmpathMath). Set `REEL_URL` when that file or unlisted video exists. A YouTube or Vimeo embed also needs a `frame-src` addition in `vercel.json`. Real card images go in `ALCHEMY_DEMO_IMG` and `EMPATHMATH_DEMO_IMG`. Both are empty, so the slots stay hidden.
 - Confirmation that TEDx allows the 16 March 2027 announcement. `SHOW_TEDX` is true until he says otherwise.
 - Whether to keep Introduction to User Experience Design. The verify code `V852H3T23GHY` is in the certificate file, and the URL returns 200, but the page HTML still has no completion sentence.
 - Which Vercel project deploys `gd-portfolio-wy18` (not changed here).

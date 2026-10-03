@@ -48,12 +48,6 @@ export const CASES: CaseStudy[] = [
       "The schema is the contract. Once both providers have to fill the same shape, swapping a model becomes a config change instead of a rewrite.",
     href: "https://tryalchemyapp.com",
     linkLabel: "tryalchemyapp.com",
-    shot: {
-      src: "/images/alchemy.webp",
-      width: 1200,
-      height: 750,
-      alt: "Screenshot of the public Alchemy landing page at tryalchemyapp.com",
-    },
   },
   {
     id: "empathmath",
@@ -69,12 +63,6 @@ export const CASES: CaseStudy[] = [
       "Making the model quote its evidence changes the output. A label, plus the line it came from, plus a confidence score, is something a person can check.",
     href: "https://empathmath.org",
     linkLabel: "empathmath.org",
-    shot: {
-      src: "/images/empathmath.webp",
-      width: 1200,
-      height: 750,
-      alt: "Screenshot of the public EmpathMath landing page at empathmath.org",
-    },
   },
   {
     id: "swords",

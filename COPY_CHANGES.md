@@ -30,4 +30,4 @@ Personal brand is Greg Dukes. BLKDMND appears as "Founder, BLKDMND" and in the p
 - TEDxNaples is visible (`SHOW_TEDX` defaults to true). Confirm TEDx allows the announcement.
 - BBC Reel URL and the short reel are still empty slots.
 - Resume PDF is not on the site until you supply one that matches LinkedIn.
-- Alchemy and EmpathMath show screenshots of the public landing pages only. They are labeled as demo slots, not as model output.
+- Alchemy and EmpathMath do not show images. The files captured earlier were Cloudflare challenge pages, so they were removed. `ALCHEMY_DEMO_IMG` and `EMPATHMATH_DEMO_IMG` are empty, which hides the demo slot. Both cards stay LIVE and keep their links.

@@ -26,6 +26,8 @@ import {
   RESUME_AVAILABLE,
   RESUME_PATH,
   SHOW_TEDX,
+  ALCHEMY_DEMO_IMG,
+  EMPATHMATH_DEMO_IMG,
 } from "./config";
 
 const badgeClass: Record<CaseStatus, string> = {
@@ -72,19 +74,16 @@ function ExternalLink({
   );
 }
 
-function DemoSlot({ shot }: { shot: NonNullable<CaseStudy["shot"]> }) {
+function DemoSlot({ src, name }: { src: string; name: string }) {
   return (
     <figure className="mt-6 overflow-hidden rounded-2xl border border-dashed border-accent/50 bg-black/40">
       <figcaption className="border-b border-white/10 px-4 py-3 text-sm text-white/80">
-        <span className="font-semibold text-accent">Demo slot.</span> Screenshot
-        of the public landing page. A short demo video can replace this later.
+        <span className="font-semibold text-accent">Demo slot.</span> {name}.
         This is not model output.
       </figcaption>
       <img
-        src={shot.src}
-        alt={shot.alt}
-        width={shot.width}
-        height={shot.height}
+        src={src}
+        alt={`${name} demo`}
         loading="lazy"
         decoding="async"
         className="h-auto w-full"
@@ -144,7 +143,12 @@ function CaseCard({ item }: { item: CaseStudy }) {
       ) : (
         <p className="mt-6 text-sm text-white/70">No public link.</p>
       )}
-      {item.shot ? <DemoSlot shot={item.shot} /> : null}
+      {item.id === "alchemy" && ALCHEMY_DEMO_IMG ? (
+        <DemoSlot src={ALCHEMY_DEMO_IMG} name={item.title} />
+      ) : null}
+      {item.id === "empathmath" && EMPATHMATH_DEMO_IMG ? (
+        <DemoSlot src={EMPATHMATH_DEMO_IMG} name={item.title} />
+      ) : null}
     </article>
   );
 }
