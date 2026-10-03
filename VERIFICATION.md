@@ -118,11 +118,17 @@ No link points at `blkdmnd.digital` or `blkdmnd.vercel.app`. BBC Reel is not lin
 9. **Fail on a strict "every link returned 200" reading.** Alchemy, EmpathMath, the booking page, GitHub, and all five Coursera verify URLs returned 200. IMDb returned 202 and still rendered "Greg Dukes - IMDb". LinkedIn returned 999 and an authwall from this network. BBC Reel has no URL yet. Nothing points at blkdmnd.digital or blkdmnd.vercel.app.
 10. **Pass.** 390px width, no horizontal scroll. Visible controls are at least 44px. Lighthouse accessibility was 100.
 11. **Pass.** Static Vite build for Vercel Hobby. No new paid service, no analytics product, no checkout on this site.
-12. **Pending the preview URL.** `COPY_CHANGES.md` is on the branch. Production was not deployed. The preview URL is recorded below after the push.
+12. **Fail for the pull request; preview exists but is locked.** `COPY_CHANGES.md` is on the branch. Production was not deployed. Opening the draft pull request failed: GitHub returned `must be a collaborator`. Vercel did build a preview. See below.
 
 ## Preview
 
-Recorded after the branch is pushed. If Vercel does not comment on the pull request, there is no preview deployment from this work.
+Vercel reported a successful preview deployment for commit `242cb26`.
+
+- Deployment URL from the GitHub deployment status: https://gd-portfolio-wy18-ph5w2tp98-blkdmnds-projects-c3c9a4c0.vercel.app
+- Branch alias named in the Vercel Preview Comments check: https://gd-portfolio-wy18-git-cursor-4342b3-blkdmnds-projects-c3c9a4c0.vercel.app
+- Dashboard: https://vercel.com/blkdmnds-projects-c3c9a4c0/gd-portfolio-wy18/5qR133feJEWGYjNNF3HJ6U5fZCV8
+
+An unauthenticated request to both app URLs returns **302** to Vercel SSO (`vercel.com/sso-api`), then a Vercel login page. Deployment Protection is on, so this environment could not read the portfolio HTML from the preview. The GitHub status text is "Deployment has completed" / success. Local `vite preview` is what was actually loaded and checked.
 
 ## Still needed from Greg
 
