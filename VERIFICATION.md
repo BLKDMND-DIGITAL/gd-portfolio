@@ -122,13 +122,13 @@ No link points at `blkdmnd.digital` or `blkdmnd.vercel.app`. BBC Reel is not lin
 
 ## Preview
 
-Vercel reported a successful preview deployment for commit `242cb26`.
+Vercel reported a successful preview. The branch alias named in the Vercel Preview Comments check is:
 
-- Deployment URL from the GitHub deployment status: https://gd-portfolio-wy18-ph5w2tp98-blkdmnds-projects-c3c9a4c0.vercel.app
-- Branch alias named in the Vercel Preview Comments check: https://gd-portfolio-wy18-git-cursor-4342b3-blkdmnds-projects-c3c9a4c0.vercel.app
-- Dashboard: https://vercel.com/blkdmnds-projects-c3c9a4c0/gd-portfolio-wy18/5qR133feJEWGYjNNF3HJ6U5fZCV8
+https://gd-portfolio-wy18-git-cursor-4342b3-blkdmnds-projects-c3c9a4c0.vercel.app
 
-An unauthenticated request to both app URLs returns **302** to Vercel SSO (`vercel.com/sso-api`), then a Vercel login page. Deployment Protection is on, so this environment could not read the portfolio HTML from the preview. The GitHub status text is "Deployment has completed" / success. Local `vite preview` is what was actually loaded and checked.
+Each push also gets its own deployment URL. For commit `4beaf08` that URL was https://gd-portfolio-wy18-6kuy313q1-blkdmnds-projects-c3c9a4c0.vercel.app. The dashboard link on the commit status is https://vercel.com/blkdmnds-projects-c3c9a4c0/gd-portfolio-wy18/9tkpKvAPVZFZSYX4c5PqckytyhhU.
+
+An unauthenticated request to these app URLs returns **302** to Vercel SSO (`vercel.com/sso-api`), then a Vercel login page. Deployment Protection is on, so this environment could not read the portfolio HTML from the preview. The GitHub status text is "Deployment has completed" / success. Local `vite preview` is what was actually loaded and checked.
 
 ## Still needed from Greg
 
