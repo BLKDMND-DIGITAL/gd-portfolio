@@ -18,7 +18,7 @@ Searched `dist/**/*.html` and `dist/**/*.js` for:
 
 `LangChain|LangGraph|Tech Systems Inc|team of 5|30%|Charlotte|production-grade|Cloud Practitioner|AWS Cloud Certification|Specialization|E2B|RAG pipelines|zero-fabrication|Stealth AI Startup|Fortune 500`
 
-**Match count: 0.** Re-run after the Frisson link and the TEDx wording: still 0. That re-run also found 0 matches for `AIza[0-9A-Za-z_-]{35}`, phone numbers, `calendar.google.com`, `@gmail.com`, and `generativelanguage.googleapis.com`. A headless Chrome load of that build had 0 console errors and 0 failed requests. The Frisson control is a link reading "Frisson, BBC Reel (2023)" to the BBC Reel URL. There is no iframe and no video element.
+**Match count: 0.** Re-run after the Frisson credit: still 0. That re-run also found 0 matches for `AIza[0-9A-Za-z_-]{35}`, phone numbers, `calendar.google.com`, `@gmail.com`, and `generativelanguage.googleapis.com`. A headless Chrome load of that build had 0 console errors and 0 failed requests. The Frisson link still reads "Frisson, BBC Reel (2023)" and points at the BBC Reel URL, with the confirmed credit beside it.
 
 `RAG` appears once, in Swords & Shields: "Not yet built: retrieval (RAG), hashing, and encryption."
 
