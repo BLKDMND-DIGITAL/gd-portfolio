@@ -290,16 +290,15 @@ export default function App() {
             ) : null}
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               <article className="rounded-3xl border border-white/10 p-6">
-                <h3 className="text-xl font-semibold">Frisson, BBC Reel (2023)</h3>
-                {BBC_REEL_URL ? (
-                  <ExternalLink href={BBC_REEL_URL} className={`${btnGhost} mt-4`}>
-                    BBC Reel
-                  </ExternalLink>
-                ) : (
-                  <p className="mt-4 rounded-2xl border border-dashed border-white/20 px-4 py-3 text-sm text-white/70">
-                    BBC Reel link slot. The page URL is not set yet.
-                  </p>
-                )}
+                <h3 className="text-xl font-semibold">
+                  {BBC_REEL_URL ? (
+                    <ExternalLink href={BBC_REEL_URL} className={`${btnGhost} mt-0`}>
+                      Frisson, BBC Reel (2023)
+                    </ExternalLink>
+                  ) : (
+                    "Frisson, BBC Reel (2023)"
+                  )}
+                </h3>
               </article>
               <article className="rounded-3xl border border-white/10 p-6">
                 <h3 className="text-xl font-semibold">IMDb</h3>

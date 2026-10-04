@@ -18,7 +18,7 @@ Searched `dist/**/*.html` and `dist/**/*.js` for:
 
 `LangChain|LangGraph|Tech Systems Inc|team of 5|30%|Charlotte|production-grade|Cloud Practitioner|AWS Cloud Certification|Specialization|E2B|RAG pipelines|zero-fabrication|Stealth AI Startup|Fortune 500`
 
-**Match count: 0.** Re-run after the challenge-page images were removed: still 0. The same re-run found 0 matches for `AIza[0-9A-Za-z_-]{35}`, phone numbers, `calendar.google.com`, `@gmail.com`, and `generativelanguage.googleapis.com`. A headless Chrome load of that build had 0 console errors and 0 failed requests. The only image requested was the hero. Alchemy and EmpathMath still show LIVE and their outbound links, with no demo figure.
+**Match count: 0.** Re-run after the Frisson link and the TEDx wording: still 0. That re-run also found 0 matches for `AIza[0-9A-Za-z_-]{35}`, phone numbers, `calendar.google.com`, `@gmail.com`, and `generativelanguage.googleapis.com`. A headless Chrome load of that build had 0 console errors and 0 failed requests. The Frisson control is a link reading "Frisson, BBC Reel (2023)" to the BBC Reel URL. There is no iframe and no video element.
 
 `RAG` appears once, in Swords & Shields: "Not yet built: retrieval (RAG), hashing, and encryption."
 
@@ -101,7 +101,7 @@ Local preview does not apply `vercel.json` headers. Those headers are in the rep
 | https://www.imdb.com/name/nm15135596/ | Chrome document status **202**. The loaded title was "Greg Dukes - IMDb". |
 | https://www.linkedin.com/in/greg-dukes-genai/ | Chrome status **999**, then an authwall. The redirect target is that profile URL. |
 
-No link points at `blkdmnd.digital` or `blkdmnd.vercel.app`. BBC Reel is not linked, because `BBC_REEL_URL` is empty.
+No link points at `blkdmnd.digital` or `blkdmnd.vercel.app`. Frisson links to https://www.bbc.com/reel/video/p0dgrs1l/watch, which returned 200 on Oct 4, 2026. The page does not embed that video and does not use a BBC still.
 
 ## Acceptance criteria
 
@@ -110,10 +110,10 @@ No link points at `blkdmnd.digital` or `blkdmnd.vercel.app`. BBC Reel is not lin
 3. **Pass.** No API-key pattern, no phone number, no Google Calendar embed, no `.env` file. Resume PDF is absent on purpose.
 4. **Pending Greg's resume file.** Load has 0 console errors and 0 failed requests. Favicon, robots, sitemap, and og.png return 200. `/index.css` is not requested. `/Greg_Dukes_Resume.pdf` returns 404 until Greg supplies the file. The download button stays hidden.
 5. **Pass (Option A).** The client bundle has no `generativelanguage.googleapis.com` call. The Alchemy and EmpathMath images were Cloudflare "Performing security verification" pages, so the files and the captions that called them landing-page screenshots were removed. `ALCHEMY_DEMO_IMG` and `EMPATHMATH_DEMO_IMG` are empty, and those cards render no demo image. Both stay LIVE and keep their links.
-6. **Pass, with two confirmations still open.** Footer renders `© 2026 Greg Dukes · Founder, BLKDMND` (year from `new Date().getFullYear()`). Location is Miami, FL. LinkedIn href is `https://www.linkedin.com/in/greg-dukes-genai/`. The AWS sentence matches Greg's wording. Credentials match profile overhaul §8, including Georgia Tech because its verify code is in the 2 Oct certificate file. TEDx is visible because `SHOW_TEDX` defaults to true; Greg still has to confirm TEDx allows the announcement. Georgia Tech's verify page did not show completion text in the HTML.
+6. **Pass, with the Georgia Tech caveat still open.** Footer renders `© 2026 Greg Dukes · Founder, BLKDMND` (year from `new Date().getFullYear()`). Location is Miami, FL. LinkedIn href is `https://www.linkedin.com/in/greg-dukes-genai/`. The AWS sentence matches Greg's wording. Credentials match profile overhaul §8, including Georgia Tech because its verify code is in the 2 Oct certificate file. Georgia Tech's verify page did not show completion text in the HTML. `SHOW_TEDX` stays true. Greg confirmed the TEDxNaples announcement. The talk is framed as a filmmaker and storyteller's talk on frisson, in the musician and filmmaker lane. No Frisson role credit is stated.
 7. **Pass for the raw HTML.** Title, description, Open Graph, Twitter card, and Person JSON-LD are in the response with JS disabled. LinkedIn Post Inspector was not run: this branch was not deployed.
 8. **Pass.** Lighthouse mobile scores and LCP/CLS meet the targets. Tailwind CDN and the import map are gone. Hero images are under 200 KB.
-9. **Fail on a strict "every link returned 200" reading.** Alchemy, EmpathMath, the booking page, GitHub, and all five Coursera verify URLs returned 200. IMDb returned 202 and still rendered "Greg Dukes - IMDb". LinkedIn returned 999 and an authwall from this network. BBC Reel has no URL yet. Nothing points at blkdmnd.digital or blkdmnd.vercel.app.
+9. **Fail on a strict "every link returned 200" reading.** On the Oct 4 recheck, the BBC Reel URL, Alchemy, EmpathMath, the booking page, GitHub, and all five Coursera verify URLs returned 200. IMDb returned 202. LinkedIn returned 999. Nothing points at blkdmnd.digital or blkdmnd.vercel.app.
 10. **Pass.** 390px width, no horizontal scroll. Visible controls are at least 44px. Lighthouse accessibility was 100.
 11. **Pass.** Static Vite build for Vercel Hobby. No new paid service, no analytics product, no checkout on this site.
 12. **Fail for the pull request; preview exists but is locked.** `COPY_CHANGES.md` is on the branch. Production was not deployed. Opening the draft pull request failed: GitHub returned `must be a collaborator`. Vercel did build a preview. See below.
@@ -131,8 +131,7 @@ An unauthenticated request to these app URLs returns **302** to Vercel SSO (`ver
 ## Still needed from Greg
 
 - The resume PDF, saved as `Greg_Dukes_Resume.pdf`, with no Cloud Practitioner or LangChain claims. Then set `RESUME_AVAILABLE` to true.
-- The BBC Reel URL for Frisson, and confirmation of his role credit.
+- His role credit on Frisson. The BBC Reel link is in place. No credit is stated yet.
 - A reel or demo clips he owns (Alchemy, EmpathMath). Set `REEL_URL` when that file or unlisted video exists. A YouTube or Vimeo embed also needs a `frame-src` addition in `vercel.json`. Real card images go in `ALCHEMY_DEMO_IMG` and `EMPATHMATH_DEMO_IMG`. Both are empty, so the slots stay hidden.
-- Confirmation that TEDx allows the 16 March 2027 announcement. `SHOW_TEDX` is true until he says otherwise.
 - Whether to keep Introduction to User Experience Design. The verify code `V852H3T23GHY` is in the certificate file, and the URL returns 200, but the page HTML still has no completion sentence.
 - Which Vercel project deploys `gd-portfolio-wy18` (not changed here).

@@ -1,6 +1,6 @@
 /**
  * Site configuration. CONTACT_EMAIL is the only email address in this project.
- * Greg must confirm TEDx allows a public announcement before SHOW_TEDX stays on.
+ * Greg confirmed on Oct 4, 2026 that TEDx allows the announcement. SHOW_TEDX stays on.
  */
 
 export const CONTACT_EMAIL = "info@gregdukesai.com";
@@ -10,7 +10,7 @@ export const RESUME_AVAILABLE = false;
 
 export const RESUME_PATH = "/Greg_Dukes_Resume.pdf";
 
-/** TEDxNaples, March 16, 2027. Default on; Greg must confirm TEDx allows announcing it. */
+/** TEDxNaples, March 16, 2027. Greg confirmed the announcement is allowed. */
 export const SHOW_TEDX = true;
 
 /**
@@ -19,8 +19,8 @@ export const SHOW_TEDX = true;
  */
 export const REEL_URL = "";
 
-/** TODO: Greg supplies the BBC Reel page URL for Frisson. Empty keeps a title-only slot. */
-export const BBC_REEL_URL = "";
+/** Frisson on BBC Reel. Link only. Do not embed the video or use a BBC still. */
+export const BBC_REEL_URL = "https://www.bbc.com/reel/video/p0dgrs1l/watch";
 
 /** Public path for a real Alchemy demo image. Empty hides the slot. */
 export const ALCHEMY_DEMO_IMG = "";
