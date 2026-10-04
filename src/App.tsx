@@ -299,6 +299,9 @@ export default function App() {
                     "Frisson, BBC Reel (2023)"
                   )}
                 </h3>
+                <p className="mt-4 text-base font-normal leading-relaxed text-white/80">
+                  Credited as producer and presenter; also researched, booked the interviews, and edited.
+                </p>
               </article>
               <article className="rounded-3xl border border-white/10 p-6">
                 <h3 className="text-xl font-semibold">IMDb</h3>

@@ -22,12 +22,12 @@ Personal brand is Greg Dukes. BLKDMND appears as "Founder, BLKDMND" and in the p
 | Footer: BLKDMND π DIGITAL © 2025 | © {current year} Greg Dukes · Founder, BLKDMND |
 | Email and phone in the bundle, Google Calendar embed, blkdmnd.digital | Email button uses info@gregdukesai.com. No phone. Book a call goes to https://gregdukesai.com/book/ |
 | Download resume generated in the browser | Button hidden until `/Greg_Dukes_Resume.pdf` is supplied (`RESUME_AVAILABLE=false`) |
-| No media or speaking section | "Frisson, BBC Reel (2023)" links to https://www.bbc.com/reel/video/p0dgrs1l/watch. No role credit, no embed, no BBC still. IMDb linked. Personal reel still hidden. TEDxNaples, March 16, 2027, is on: a filmmaker and storyteller's talk on frisson, in the musician and filmmaker lane |
+| No media or speaking section | "Frisson, BBC Reel (2023)" links to https://www.bbc.com/reel/video/p0dgrs1l/watch. Credit: producer and presenter; also researched, booked the interviews, and edited. No embed, no BBC still. IMDb linked. Personal reel still hidden. TEDxNaples, March 16, 2027, is on: a filmmaker and storyteller's talk on frisson, in the musician and filmmaker lane |
 
 ## Notes that need your yes
 
 - Georgia Tech UX is included because verify code `V852H3T23GHY` is in the Oct 2 certificate file. That same file says the verify page did not return completion text. Say if it should come off the page.
 - TEDxNaples stays visible. Greg confirmed on Oct 4, 2026 that the announcement is allowed. `SHOW_TEDX` remains true. The talk is framed as a filmmaker and storyteller's talk on frisson, in the musician and filmmaker lane.
-- Frisson links to the BBC Reel page Greg supplied. No role credit until he confirms one. The personal reel slot stays hidden.
+- Frisson links to the BBC Reel page Greg supplied. He confirmed the credit: producer and presenter; he also researched, booked the interviews, and edited. The personal reel slot stays hidden.
 - Resume PDF is not on the site until you supply one that matches LinkedIn.
 - Alchemy and EmpathMath do not show images. The files captured earlier were Cloudflare challenge pages, so they were removed. `ALCHEMY_DEMO_IMG` and `EMPATHMATH_DEMO_IMG` are empty, which hides the demo slot. Both cards stay LIVE and keep their links.
