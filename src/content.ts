@@ -26,7 +26,7 @@ export const HERO_HEADLINE =
   "AI engineer and forward-deployed builder. Documentary filmmaker since 2015.";
 
 export const POSITIONING =
-  "I'm a documentary filmmaker and the founder of BLKDMND, and I build and ship AI products under my own name.";
+  "I'm a documentary filmmaker and Founder & AI Engineer, BLKDMND, and I build and ship AI products under my own name.";
 
 export const OPEN_TO =
   "Open to remote/hybrid: AI Eng · FDE · Solutions · AI Workflow · Media Tech";
@@ -181,14 +181,6 @@ export const CREDENTIALS: Credential[] = [
     issued: "Sep 2022",
     code: "6N24UPMPFPRH",
     href: "https://coursera.org/verify/6N24UPMPFPRH",
-    note: "Coursera course certificate",
-  },
-  {
-    name: "Introduction to User Experience Design",
-    issuer: "Georgia Institute of Technology (via Coursera)",
-    issued: "Aug 2020",
-    code: "V852H3T23GHY",
-    href: "https://coursera.org/verify/V852H3T23GHY",
     note: "Coursera course certificate",
   },
 ];
