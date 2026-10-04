@@ -77,7 +77,7 @@ The resume button is omitted because `RESUME_AVAILABLE` is false. No PDF was gen
 | `empathmath_demo.mp4` | 28.8 s | 3.18 MB |
 | `alchemy_public_tour.mp4` | 22.7 s | 2.24 MB |
 
-Both are H.264, 1280×720, no audio track. The eight WebP files named in the studio README were not in the upload folder (only the two MP4s and the README were). Posters and screenshots are frames from those recordings at the moments the README describes, encoded WebP quality 85 at 1280×720. Alt text and captions use the README wording. The Alchemy figure is labeled "Site tour · public pages only."
+Both are H.264, 1280×720, no audio track. The eight posters and screenshots are STUDIO's annotated WebPs, with the gold callout labels. They replaced the frames extracted from the MP4s. Filenames match the README (`empathmath_demo_poster.webp`, `empathmath_01_input.webp`, `empathmath_02_signal_map.webp`, `empathmath_03_evidence.webp`, `alchemy_public_tour_poster.webp`, `alchemy_01_hero.webp`, `alchemy_02_flow.webp`, `alchemy_03_pricing.webp`). Each is 1280×720. Alt text and captions use the README wording. The Alchemy figure is labeled "Site tour · public pages only."
 
 Each `<video>` has `controls`, `muted`, `playsinline` (React `playsInline`; the DOM property `playsInline` is true), `preload="none"`, a poster, and `width="1280"` `height="720"`. The six screenshots use `loading="lazy"` `decoding="async"` with the same width and height.
 
