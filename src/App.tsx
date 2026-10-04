@@ -27,7 +27,14 @@ import {
   RESUME_PATH,
   SHOW_TEDX,
   ALCHEMY_DEMO_IMG,
+  ALCHEMY_DEMO_VIDEO,
+  ALCHEMY_MEDIA,
+  DEMO_HEIGHT,
+  DEMO_WIDTH,
   EMPATHMATH_DEMO_IMG,
+  EMPATHMATH_DEMO_VIDEO,
+  EMPATHMATH_MEDIA,
+  type DemoMedia,
 } from "./config";
 
 const badgeClass: Record<CaseStatus, string> = {
@@ -74,21 +81,58 @@ function ExternalLink({
   );
 }
 
-function DemoSlot({ src, name }: { src: string; name: string }) {
+function CaseMedia({ media }: { media: DemoMedia }) {
+  if (!media.video && !media.stills.some((shot) => shot.src)) return null;
   return (
-    <figure className="mt-6 overflow-hidden rounded-2xl border border-dashed border-accent/50 bg-black/40">
-      <figcaption className="border-b border-white/10 px-4 py-3 text-sm text-white/80">
-        <span className="font-semibold text-accent">Demo slot.</span> {name}.
-        This is not model output.
-      </figcaption>
-      <img
-        src={src}
-        alt={`${name} demo`}
-        loading="lazy"
-        decoding="async"
-        className="h-auto w-full"
-      />
-    </figure>
+    <div className="mt-6 space-y-4">
+      {media.video ? (
+        <figure className="overflow-hidden rounded-2xl border border-white/10 bg-black">
+          <figcaption className="border-b border-white/10 px-4 py-3 text-sm leading-relaxed text-white/80">
+            {media.kicker ? (
+              <span className="font-semibold text-accent">{media.kicker} </span>
+            ) : null}
+            {media.caption}
+          </figcaption>
+          <video
+            controls
+            muted
+            playsInline
+            preload="none"
+            poster={media.poster || undefined}
+            width={DEMO_WIDTH}
+            height={DEMO_HEIGHT}
+            aria-label={media.videoLabel}
+            className="aspect-video h-auto w-full"
+          >
+            <source src={media.video} type="video/mp4" />
+          </video>
+        </figure>
+      ) : null}
+      {media.stills.length > 0 ? (
+        <ul className="grid gap-4">
+          {media.stills.map((shot) =>
+            shot.src ? (
+              <li key={shot.src}>
+                <figure>
+                  <img
+                    src={shot.src}
+                    alt={shot.alt}
+                    width={DEMO_WIDTH}
+                    height={DEMO_HEIGHT}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-auto w-full rounded-2xl border border-white/10"
+                  />
+                  <figcaption className="mt-2 text-sm leading-relaxed text-white/70">
+                    {shot.caption}
+                  </figcaption>
+                </figure>
+              </li>
+            ) : null,
+          )}
+        </ul>
+      ) : null}
+    </div>
   );
 }
 
@@ -143,11 +187,11 @@ function CaseCard({ item }: { item: CaseStudy }) {
       ) : (
         <p className="mt-6 text-sm text-white/70">No public link.</p>
       )}
-      {item.id === "alchemy" && ALCHEMY_DEMO_IMG ? (
-        <DemoSlot src={ALCHEMY_DEMO_IMG} name={item.title} />
+      {item.id === "alchemy" && (ALCHEMY_DEMO_VIDEO || ALCHEMY_DEMO_IMG) ? (
+        <CaseMedia media={ALCHEMY_MEDIA} />
       ) : null}
-      {item.id === "empathmath" && EMPATHMATH_DEMO_IMG ? (
-        <DemoSlot src={EMPATHMATH_DEMO_IMG} name={item.title} />
+      {item.id === "empathmath" && (EMPATHMATH_DEMO_VIDEO || EMPATHMATH_DEMO_IMG) ? (
+        <CaseMedia media={EMPATHMATH_MEDIA} />
       ) : null}
     </article>
   );

@@ -1,13 +1,13 @@
 # Verification — recruiter landing page
 
-Checked on this branch, 3 Oct 2026, against a local production build (`npm run build`, then `vite preview` on port 4173 and Python's static server on port 4174 for missing-file status). Nothing was deployed. `vercel --prod` was not run.
+Checked on this branch, 4 Oct 2026, against a local production build (`npm run build`, then `vite preview` on port 4173). Nothing was deployed. `vercel --prod` was not run.
 
 ## Build
 
 `npm run build` passed (`tsc --noEmit`, Vite build, then `scripts/prerender.mjs`).
 
-- Initial JS: `dist/assets/index-Plv3ShWp.js`, 241,608 bytes raw, **74,939 bytes gzip** (limit 200 KB gzip).
-- CSS: 12.16 KB raw / 3.26 KB gzip.
+- Initial JS: `dist/assets/index-CXM83ho1.js`, 244,529 bytes raw, **76,148 bytes gzip** (limit 200 KB gzip).
+- CSS: 12,490 bytes raw / 3,318 bytes gzip.
 - Hero: `public/images/hero.avif` 35,778 bytes, `public/images/hero.webp` 77,150 bytes. Both are under 200 KB. Intrinsic size 800×1000, and the `<img>` sets `width` and `height`. Source is the previous i.imgur.com portrait, cropped to the upper body and re-encoded.
 - Tailwind is compiled with Tailwind 3 and PostCSS. `index.html` has no `cdn.tailwindcss.com` script and no esm.sh import map.
 - `@google/genai`, `jspdf`, and `html2canvas` are not dependencies. `vite.config.ts` has no `define` block.
@@ -18,7 +18,7 @@ Searched `dist/**/*.html` and `dist/**/*.js` for:
 
 `LangChain|LangGraph|Tech Systems Inc|team of 5|30%|Charlotte|production-grade|Cloud Practitioner|AWS Cloud Certification|Specialization|E2B|RAG pipelines|zero-fabrication|Stealth AI Startup|Fortune 500`
 
-**Match count: 0.** Re-run after removing the Georgia Tech credential and setting the role title: still 0. That re-run also found 0 matches for `AIza[0-9A-Za-z_-]{35}`, phone numbers, `calendar.google.com`, `@gmail.com`, and `generativelanguage.googleapis.com`. The built HTML and JS contain no Georgia Tech credential and no "Architect". A headless Chrome load had 0 console errors and 0 failed requests. The document title is "Greg Dukes — Founder & AI Engineer, BLKDMND". The footer is "© 2026 Greg Dukes · Founder, BLKDMND".
+**Match count: 0.** Re-run after wiring the studio media: still 0. That re-run also found 0 matches for `AIza[0-9A-Za-z_-]{35}`, phone numbers, `calendar.google.com`, `@gmail.com`, and `generativelanguage.googleapis.com`. The built HTML and JS contain no Georgia Tech credential and no "Architect". A headless Chrome load had 0 console errors and 0 failed requests. The document title is "Greg Dukes — Founder & AI Engineer, BLKDMND". The footer is "© 2026 Greg Dukes · Founder, BLKDMND".
 
 `RAG` appears once, in Swords & Shields: "Not yet built: retrieval (RAG), hashing, and encryption."
 
@@ -68,20 +68,34 @@ Static server (`python3 -m http.server` in `dist/`, which does not SPA-fallback)
 
 The resume button is omitted because `RESUME_AVAILABLE` is false. No PDF was generated.
 
+## Demo media
+
+`public/media/` holds the two studio MP4s, copied as-is:
+
+| File | Duration | Size |
+|---|---|---|
+| `empathmath_demo.mp4` | 28.8 s | 3.18 MB |
+| `alchemy_public_tour.mp4` | 22.7 s | 2.24 MB |
+
+Both are H.264, 1280×720, no audio track. The eight WebP files named in the studio README were not in the upload folder (only the two MP4s and the README were). Posters and screenshots are frames from those recordings at the moments the README describes, encoded WebP quality 85 at 1280×720. Alt text and captions use the README wording. The Alchemy figure is labeled "Site tour · public pages only."
+
+Each `<video>` has `controls`, `muted`, `playsinline` (React `playsInline`; the DOM property `playsInline` is true), `preload="none"`, a poster, and `width="1280"` `height="720"`. The six screenshots use `loading="lazy"` `decoding="async"` with the same width and height.
+
+On a 390×844 headless load, the only `/media/` responses before interaction were the two posters (200). Neither MP4 was requested. After scrolling, the six stills returned 200. Playing the Alchemy video then requested `alchemy_public_tour.mp4` (206). `vercel.json` already sets `media-src 'self'`, so same-origin playback needs no CSP change.
+
 ## Lighthouse mobile
 
-Lighthouse  (mobile, simulated, headless Chrome) against `http://127.0.0.1:4173/`:
+Lighthouse (mobile, simulated, headless Chrome) against `http://127.0.0.1:4173/`, three runs:
 
-| Category | Score | Target |
-|---|---|---|
-| Performance | 97 | ≥ 90 |
-| Accessibility | 100 | ≥ 95 |
-| Best Practices | 100 | ≥ 95 |
-| SEO | 100 | ≥ 95 |
+| Category | Run 1 | Run 2 | Run 3 | Target |
+|---|---|---|---|---|
+| Performance | 92 | 98 | 92 | ≥ 90 |
+| Accessibility | 100 | 100 | 100 | ≥ 95 |
+| Best Practices | 100 | 100 | 100 | ≥ 95 |
+| SEO | 100 | 100 | 100 | ≥ 95 |
 
-- LCP 2.2 s (numeric 2180.7 ms). Target < 2.5 s.
-- CLS 0 (numeric 0.000253). Target < 0.1.
-- Total blocking time 0 ms.
+- LCP simulated: 3.2 s, 2.3 s, 3.1 s. Observed LCP on the first trace was 95 ms. CLS 0 (numeric 0 or 0.000253). Total blocking time 0 ms.
+- Performance stayed at 92 or above. Simulated LCP moved around the 2.5 s line between runs. The LCP element was the hero portrait, not a video or poster.
 
 Local preview does not apply `vercel.json` headers. Those headers are in the repo for Vercel: Content-Security-Policy (no third-party script hosts), Referrer-Policy `strict-origin-when-cross-origin`, and `X-Content-Type-Options: nosniff`.
 
@@ -108,10 +122,10 @@ No link points at `blkdmnd.digital` or `blkdmnd.vercel.app`. Frisson links to ht
 2. **Pass.** Swords & Shields badge is PROTOTYPE. BLKDMND OS badge is INTERNAL · NON-PRODUCTION. Neither card says the work is in production or deployed. The badge itself contains the word PRODUCTION as part of NON-PRODUCTION.
 3. **Pass.** No API-key pattern, no phone number, no Google Calendar embed, no `.env` file. Resume PDF is absent on purpose.
 4. **Pending Greg's resume file.** Load has 0 console errors and 0 failed requests. Favicon, robots, sitemap, and og.png return 200. `/index.css` is not requested. `/Greg_Dukes_Resume.pdf` returns 404 until Greg supplies the file. The download button stays hidden.
-5. **Pass (Option A).** The client bundle has no `generativelanguage.googleapis.com` call. The Alchemy and EmpathMath images were Cloudflare "Performing security verification" pages, so the files and the captions that called them landing-page screenshots were removed. `ALCHEMY_DEMO_IMG` and `EMPATHMATH_DEMO_IMG` are empty, and those cards render no demo image. Both stay LIVE and keep their links.
+5. **Pass.** The client bundle has no `generativelanguage.googleapis.com` call. Alchemy and EmpathMath use the studio MP4s and stills described above. Alchemy is labeled a site tour of public pages only. Both cards stay LIVE and keep their links. Videos use `preload="none"` and were not requested until playback.
 6. **Pass.** Footer renders `© 2026 Greg Dukes · Founder, BLKDMND` (year from `new Date().getFullYear()`). The role title elsewhere is `Founder & AI Engineer, BLKDMND`. Location is Miami, FL. LinkedIn href is `https://www.linkedin.com/in/greg-dukes-genai/`. The AWS sentence matches Greg's wording. Credentials are the four Coursera course certificates Greg kept. Introduction to User Experience Design is not on the page. `SHOW_TEDX` stays true. Greg confirmed the TEDxNaples announcement. The talk is framed as a filmmaker and storyteller's talk on frisson, in the musician and filmmaker lane. The Frisson item states his confirmed credit: producer and presenter; also researched, booked the interviews, and edited.
 7. **Pass for the raw HTML.** Title, description, Open Graph, Twitter card, and Person JSON-LD are in the response with JS disabled. LinkedIn Post Inspector was not run: this branch was not deployed.
-8. **Pass.** Lighthouse mobile scores and LCP/CLS meet the targets. Tailwind CDN and the import map are gone. Hero images are under 200 KB.
+8. **Pass on the score targets.** Three mobile runs scored Performance 92, 98, and 92, all at or above 90. Accessibility, Best Practices, and SEO were 100. CLS was 0. Simulated LCP was 3.2 s, 2.3 s, and 3.1 s, so it is not stable under 2.5 s. Tailwind CDN and the import map are gone. Hero images are under 200 KB.
 9. **Fail on a strict "every link returned 200" reading.** On the Oct 4 recheck, the BBC Reel URL, Alchemy, EmpathMath, the booking page, GitHub, and all five Coursera verify URLs returned 200. IMDb returned 202. LinkedIn returned 999. Nothing points at blkdmnd.digital or blkdmnd.vercel.app.
 10. **Pass.** 390px width, no horizontal scroll. Visible controls are at least 44px. Lighthouse accessibility was 100.
 11. **Pass.** Static Vite build for Vercel Hobby. No new paid service, no analytics product, no checkout on this site.
@@ -130,5 +144,5 @@ An unauthenticated request to these app URLs returns **302** to Vercel SSO (`ver
 ## Still needed from Greg
 
 - The resume PDF, saved as `Greg_Dukes_Resume.pdf`, with no Cloud Practitioner or LangChain claims. Then set `RESUME_AVAILABLE` to true.
-- A reel or demo clips he owns (Alchemy, EmpathMath). Set `REEL_URL` when that file or unlisted video exists. A YouTube or Vimeo embed also needs a `frame-src` addition in `vercel.json`. Real card images go in `ALCHEMY_DEMO_IMG` and `EMPATHMATH_DEMO_IMG`. Both are empty, so the slots stay hidden.
+- A personal reel. Set `REEL_URL` when that file or unlisted video exists. A YouTube or Vimeo embed also needs a `frame-src` addition in `vercel.json`. The Alchemy and EmpathMath clips are already wired.
 - Which Vercel project deploys `gd-portfolio-wy18` (not changed here).
