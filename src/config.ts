@@ -5,8 +5,8 @@
 
 export const CONTACT_EMAIL = "info@gregdukesai.com";
 
-/** Set true only after public/Greg_Dukes_Resume.pdf is the approved file. */
-export const RESUME_AVAILABLE = false;
+/** Greg approved public/Greg_Dukes_Resume.pdf on Oct 4, 2026. */
+export const RESUME_AVAILABLE = true;
 
 export const RESUME_PATH = "/Greg_Dukes_Resume.pdf";
 

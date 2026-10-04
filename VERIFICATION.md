@@ -6,7 +6,7 @@ Checked on this branch, 4 Oct 2026, against a local production build (`npm run b
 
 `npm run build` passed (`tsc --noEmit`, Vite build, then `scripts/prerender.mjs`).
 
-- Initial JS: `dist/assets/index-CXM83ho1.js`, 244,529 bytes raw, **76,148 bytes gzip** (limit 200 KB gzip).
+- Initial JS: `dist/assets/index-C5MyMSOY.js`, 244,619 bytes raw, **76,186 bytes gzip** (limit 200 KB gzip).
 - CSS: 12,490 bytes raw / 3,318 bytes gzip.
 - Hero: `public/images/hero.avif` 35,778 bytes, `public/images/hero.webp` 77,150 bytes. Both are under 200 KB. Intrinsic size 800×1000, and the `<img>` sets `width` and `height`. Source is the previous i.imgur.com portrait, cropped to the upper body and re-encoded.
 - Tailwind is compiled with Tailwind 3 and PostCSS. `index.html` has no `cdn.tailwindcss.com` script and no esm.sh import map.
@@ -64,9 +64,9 @@ Static server (`python3 -m http.server` in `dist/`, which does not SPA-fallback)
 | `/images/hero.avif` | 200 |
 | `/images/hero.webp` | 200 |
 | `/index.css` | 404 (not linked, and not requested on load) |
-| `/Greg_Dukes_Resume.pdf` | 404 |
+| `/Greg_Dukes_Resume.pdf` | 200 (`application/pdf`, 76,294 bytes, 2 pages) |
 
-The resume button is omitted because `RESUME_AVAILABLE` is false. No PDF was generated.
+Greg approved the resume on Oct 4, 2026. `RESUME_AVAILABLE` is true. The button text is "Download resume (PDF)" and the href is `/Greg_Dukes_Resume.pdf`. On a 390px load the button is 44px tall.
 
 ## Demo media
 
@@ -122,8 +122,8 @@ No link points at `blkdmnd.digital` or `blkdmnd.vercel.app`. Frisson links to ht
 
 1. **Pass.** Claims regex match count is 0. The single `RAG` is the Swords & Shields "not yet built" line.
 2. **Pass.** Swords & Shields badge is PROTOTYPE. BLKDMND OS badge is INTERNAL · NON-PRODUCTION. Neither card says the work is in production or deployed. The badge itself contains the word PRODUCTION as part of NON-PRODUCTION.
-3. **Pass.** No API-key pattern, no phone number, no Google Calendar embed, no `.env` file. Resume PDF is absent on purpose.
-4. **Pending Greg's resume file.** Load has 0 console errors and 0 failed requests. Favicon, robots, sitemap, and og.png return 200. `/index.css` is not requested. `/Greg_Dukes_Resume.pdf` returns 404 until Greg supplies the file. The download button stays hidden.
+3. **Pass.** No API-key pattern, no Google Calendar embed, no `.env` file. The resume text has no phone number. A byte scan of the PDF matches the phone regex on font-width numbers, not on a phone number. The only email in the resume text is `info@gregdukesai.com`.
+4. **Pass.** Load has 0 console errors and 0 failed requests. Favicon, robots, sitemap, and og.png return 200. `/index.css` is not requested. `/Greg_Dukes_Resume.pdf` returns 200. The download button is visible and points at that file.
 5. **Pass.** The client bundle has no `generativelanguage.googleapis.com` call. Alchemy and EmpathMath use the studio MP4s and stills described above. Alchemy is labeled a site tour of public pages only. Both cards stay LIVE and keep their links. Videos use `preload="none"` and were not requested until playback.
 6. **Pass.** Footer renders `© 2026 Greg Dukes · Founder, BLKDMND` (year from `new Date().getFullYear()`). The role title elsewhere is `Founder & AI Engineer, BLKDMND`. Location is Miami, FL. LinkedIn href is `https://www.linkedin.com/in/greg-dukes-genai/`. The AWS sentence matches Greg's wording. Credentials are the four Coursera course certificates Greg kept. Introduction to User Experience Design is not on the page. `SHOW_TEDX` stays true. Greg confirmed the TEDxNaples announcement. The talk is framed as a filmmaker and storyteller's talk on frisson, in the musician and filmmaker lane. The Frisson item states his confirmed credit: producer and presenter; also researched, booked the interviews, and edited.
 7. **Pass for the raw HTML.** Title, description, Open Graph, Twitter card, and Person JSON-LD are in the response with JS disabled. LinkedIn Post Inspector was not run: this branch was not deployed.
@@ -145,6 +145,5 @@ An unauthenticated request to these app URLs returns **302** to Vercel SSO (`ver
 
 ## Still needed from Greg
 
-- The resume PDF, saved as `Greg_Dukes_Resume.pdf`, with no Cloud Practitioner or LangChain claims. Then set `RESUME_AVAILABLE` to true.
 - A personal reel. Set `REEL_URL` when that file or unlisted video exists. A YouTube or Vimeo embed also needs a `frame-src` addition in `vercel.json`. The Alchemy and EmpathMath clips are already wired.
 - Which Vercel project deploys `gd-portfolio-wy18` (not changed here).

@@ -21,7 +21,7 @@ Personal brand is Greg Dukes. His role title is "Founder & AI Engineer, BLKDMND"
 | Google Cloud course names, no dates | Introduction to Large Language Models and Introduction to Generative AI, both Jun 2024, with verify links |
 | Footer: BLKDMND π DIGITAL © 2025 | © {current year} Greg Dukes · Founder, BLKDMND |
 | Email and phone in the bundle, Google Calendar embed, blkdmnd.digital | Email button uses info@gregdukesai.com. No phone. Book a call goes to https://gregdukesai.com/book/ |
-| Download resume generated in the browser | Button hidden until `/Greg_Dukes_Resume.pdf` is supplied (`RESUME_AVAILABLE=false`) |
+| Download resume generated in the browser | Download resume (PDF) links to `/Greg_Dukes_Resume.pdf`. Greg approved the file on Oct 4, 2026 (`RESUME_AVAILABLE=true`) |
 | No media or speaking section | "Frisson, BBC Reel (2023)" links to https://www.bbc.com/reel/video/p0dgrs1l/watch. Credit: producer and presenter; also researched, booked the interviews, and edited. No embed, no BBC still. IMDb linked. Personal reel still hidden. TEDxNaples, March 16, 2027, is on: a filmmaker and storyteller's talk on frisson, in the musician and filmmaker lane |
 
 ## Notes that need your yes
@@ -30,5 +30,5 @@ Personal brand is Greg Dukes. His role title is "Founder & AI Engineer, BLKDMND"
 - Role title is "Founder & AI Engineer, BLKDMND" in the page title, social titles, JSON-LD job title, and the positioning line. The footer stays "© {year} Greg Dukes · Founder, BLKDMND". The live site does not use the word Architect.
 - TEDxNaples stays visible. Greg confirmed on Oct 4, 2026 that the announcement is allowed. `SHOW_TEDX` remains true. The talk is framed as a filmmaker and storyteller's talk on frisson, in the musician and filmmaker lane.
 - Frisson links to the BBC Reel page Greg supplied. He confirmed the credit: producer and presenter; he also researched, booked the interviews, and edited. The personal reel slot stays hidden.
-- Resume PDF is not on the site until you supply one that matches LinkedIn.
+- Resume PDF is the file Greg approved on Oct 4, 2026, served at `/Greg_Dukes_Resume.pdf`. The download button is on.
 - Alchemy and EmpathMath now show the studio recordings. Alchemy is labeled "Site tour · public pages only." The caption is "A quick tour of tryalchemyapp.com: hero, flow, and the in-page app-screen showcase." It is a tour of the public pages, not a generation demo. EmpathMath's caption is "EmpathMath turns one tense message into a pattern breakdown with evidence quotes, signal bands and calm replies. (Sample message; analysis sped up 4×.)" Each card also shows three stills with the README captions. Paths are `ALCHEMY_DEMO_VIDEO`, `ALCHEMY_DEMO_POSTER`, `ALCHEMY_DEMO_IMG`, and the matching EmpathMath fields.
