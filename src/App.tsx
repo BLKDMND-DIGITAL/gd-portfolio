@@ -381,9 +381,20 @@ export default function App() {
               <p className="mt-4 max-w-3xl text-base leading-relaxed text-white/80">
                 {SPEAKING.body}
               </p>
-              <p className="mt-6 rounded-2xl border border-dashed border-white/20 px-4 py-4 text-sm text-white/70">
-                Talk video placeholder. Nothing is embedded until the talk exists.
-              </p>
+              <figure className="mt-6 max-w-xs">
+                <img
+                  src="/media/greg-dukes-tedxnaples.webp"
+                  alt="Greg Dukes, TEDxNaples 2027 speaker"
+                  width={640}
+                  height={614}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-auto w-full rounded-2xl border border-white/10"
+                />
+                <figcaption className="mt-2 text-xs text-white/60">
+                  Upcoming talk, March 16, 2027. Photo: TEDxNaples
+                </figcaption>
+              </figure>
             </div>
           </section>
         ) : null}
