@@ -337,10 +337,10 @@ export default function App() {
                 <h3 className="text-xl font-semibold">
                   {BBC_REEL_URL ? (
                     <ExternalLink href={BBC_REEL_URL} className={`${btnGhost} mt-0`}>
-                      Frisson, BBC Reel (2023)
+                      Frisson, BBC Reel (2022)
                     </ExternalLink>
                   ) : (
-                    "Frisson, BBC Reel (2023)"
+                    "Frisson, BBC Reel (2022)"
                   )}
                 </h3>
                 <p className="mt-4 text-base font-normal leading-relaxed text-white/80">

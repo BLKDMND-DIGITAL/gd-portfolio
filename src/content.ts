@@ -191,5 +191,5 @@ export const GEAR =
 export const SPEAKING = {
   title: "TEDxNaples",
   when: "March 16, 2027",
-  body: "Frisson, BBC Reel (2023), came from a pitch I made after about two years and dozens of rejected BBC pitches. On March 16, 2027, I'm speaking at TEDxNaples. The talk is in the musician and filmmaker lane: a filmmaker and storyteller's talk on frisson.",
+  body: "Frisson, BBC Reel (2022, republished 2023), came from a pitch I made after about two years and dozens of rejected BBC pitches. On March 16, 2027, I'm speaking at TEDxNaples. The talk is in the musician and filmmaker lane: a filmmaker and storyteller's talk on frisson.",
 };
